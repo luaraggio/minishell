@@ -1,3 +1,2 @@
 This project is about a command-line interpreter named Minishell
-* its implementation can be splited into two basic parts
-* the first deals with user input and user interaction, like commands and signals, while the back-end is where the internal work is done (the execution).
+* its implementation can be splited into two basic parts: the first deals with user input and user interaction, like commands and signals, while the back-end is where the internal work is done (the execution).
