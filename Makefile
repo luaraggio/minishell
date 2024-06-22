@@ -1,28 +1,59 @@
 NAME = minishell
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -lreadline
 
-SRCS = main.c \
+AUTHOR          = "Daniel Herszenhaut <dherszen@student.42.rio> and Luara Raggio <lraggio@student.42.rio>"
 
-OBJS = ${SRCS:.c=.o}
+RED				= \033[0;31m
+BLUE			= \033[0;34m
+GREEN			= \033[0;32m
+NO_COLOR		= \033[0m
 
-LIBFT = libft/libft.a
+# Mandatory files and paths
+H_SRCS          = ./includes
+SRCS_PATH       = ./srcs
+OBJS_PATH       = ./objs
+C_SRCS 			= main.c
 
-all: $(NAME)
+C_OBJS		   = ${addprefix ${OBJS_PATH}/, ${C_SRCS:.c=.o}}
 
-$(LIBFT):
-			make -s -C libft
+# libft
+LIBFT_PATH      = ./libft
+LIBFT           = ${LIBFT_PATH}/libft.a
 
-$(NAME):	$(LIBFT) $(SRCS)
-		$(CC) $(CFLAGS) $(LIBFT) $(SRCS) -o $(NAME)
-		@echo "✅ Minishell is ready!"
+# Remove files
+RM              = rm -f
 
+# compiler and compiler flags
+CC              = cc
+C_FLAGS        ?= -Wall   \
+                  -Wextra \
+                  -Werror \
+                  -ggdb3
+RL_FLAGS = -lreadline
+
+# Default c.o. rule
+${OBJS_PATH}/%.o: ${SRCS_PATH}/%.c
+				@mkdir -p $(@D)
+				@${CC} ${C_FLAGS} -c $< -o $@ -I${H_SRCS}
+
+all:			${NAME}
+
+${NAME}:		${LIBFT} ${C_OBJS}
+				@${CC} ${C_FLAGS} ${C_OBJS} -o ${NAME} -I${H_SRCS} ${LIBFT} ${RL_FLAGS} && echo "✅ ${BLUE}${NAME}${GREEN} has been compiled!${NO_COLOR}" || echo "❌ ${BLUE}${NAME}${RED} failed to compile${NO_COLOR}"
+
+# Rule for building libft
+libft:			${LIBFT}
+
+${LIBFT}:
+				@make -C ${LIBFT_PATH} all > /dev/null && echo "✅ ${BLUE}Libft ${GREEN}compilation successful!${NO_COLOR}" || echo "❌ ${RED}Libft compilation failed!${NO_COLOR}"
+
+# Clean targets
 clean:
-	make clean -C libft
-	rm -rf $(OBJS)
+	@make -C ${LIBFT_PATH} fclean > /dev/null && echo "✅ ${BLUE}Libft ${GREEN}files successful deleted!${NO_COLOR}" || echo "❌ ${RED}Libft files deleting failed!${NO_COLOR}"
+	@${RM} -r ${OBJS_PATH} && echo "✅ ${GREEN}All ${BLUE}${NAME} ${GREEN}objects erased!${NO_COLOR}" || echo "❌ ${RED}All ${BLUE}${NAME} ${RED} objects erasing failed!${NO_COLOR}"
 
 fclean: clean
-	make fclean -C libft
-	rm -rf $(NAME)
+	@${RM} ${NAME} && echo "✅ ${BLUE}${NAME} ${GREEN}binaries erased!${NO_COLOR}" || echo "❌ ${BLUE}${NAME} ${RED}binaries erasing failed!${NO_COLOR}"
 
 re: fclean all
+
+PHONY: all clean fclean re
