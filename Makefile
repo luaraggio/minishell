@@ -49,11 +49,11 @@ ${LIBFT}:
 # Clean targets
 clean:
 	@make -C ${LIBFT_PATH} fclean > /dev/null && echo "✅ ${BLUE}Libft ${GREEN}files successful deleted!${NO_COLOR}" || echo "❌ ${RED}Libft files deleting failed!${NO_COLOR}"
-	@${RM} -r ${OBJS_PATH} && echo "✅ ${GREEN}All ${BLUE}${NAME} ${GREEN}objects erased!${NO_COLOR}" || echo "❌ ${RED}All ${BLUE}${NAME} ${RED} objects erasing failed!${NO_COLOR}"
+	@${RM} -rf ${OBJS_PATH} && echo "✅ ${GREEN}All ${BLUE}${NAME} ${GREEN}objects erased!${NO_COLOR}" || echo "❌ ${RED}All ${BLUE}${NAME} ${RED} objects erasing failed!${NO_COLOR}"
 
 fclean: clean
 	@${RM} ${NAME} && echo "✅ ${BLUE}${NAME} ${GREEN}binaries erased!${NO_COLOR}" || echo "❌ ${BLUE}${NAME} ${RED}binaries erasing failed!${NO_COLOR}"
 
 re: fclean all
 
-PHONY: all clean fclean re
+.PHONY: all clean fclean re
