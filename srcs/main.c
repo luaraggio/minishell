@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/21 21:25:24 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/22 10:55:26 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	sigint_handle(int sig)
 	prompt_status = 1;
 	printf("\n");
 	rl_on_new_line();
-	//replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
