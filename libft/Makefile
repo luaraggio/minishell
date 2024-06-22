@@ -79,18 +79,18 @@ AR			= ar ${AR_FLAGS}
 BONUS_OBJS	= ${addprefix ${C_PATH}, ${BONUS_SRCS:.c=.o}}
 
 .c.o:
-			${CC} ${C_FLAGS} -c $< -o ${<:.c=.o} -I${H_SRCS}
+			@${CC} ${C_FLAGS} -c $< -o ${<:.c=.o} -I${H_SRCS}
 
 ${NAME}:	${C_OBJS}
-			${AR} ${NAME} ${C_OBJS} ${BONUS_OBJS}
+			@${AR} ${NAME} ${C_OBJS} ${BONUS_OBJS}
 
 all:		${NAME}
 
 clean:
-			${RM} ${C_OBJS} ${BONUS_OBJS}
+			@${RM} ${C_OBJS} ${BONUS_OBJS}
 
 fclean:		clean
-			${RM} ${NAME}
+			@${RM} ${NAME}
 
 re:			fclean all
 

@@ -1,15 +1,26 @@
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/21 21:44:55 by dherszen          #+#    #+#             */
+/*   Updated: 2024/06/21 21:46:23 by dherszen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-    int i;
-    i = 0;
-    while (s1[i] || s2[i])
-    {
-        if (s1[i] == s2[i])
-            i++;
-        else
-            return (s1[i] - s2[i]);
-    }
-    return (0);
+	int i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] == s2[i])
+			i++;
+		else
+			return (s1[i] - s2[i]);
+	}
+	return (0);
 }
