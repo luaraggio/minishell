@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:58:53 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 17:15:14 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:04:14 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ enum	e_builtins
 
 void	setup_signal_handling(void);
 void	signal_handle(int sig);
-
+void	handle_sig_error(int sig);
 #endif
