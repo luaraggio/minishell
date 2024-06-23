@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 17:46:46 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:54:23 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	setup_signal_handling(void)
 		perror(("Error setting up SIGINT handler\n"));
 		exit(EXIT_FAILURE);
 	}
+	sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 	{
 		perror(("Error setting up SIGQUIT handler\n"));
