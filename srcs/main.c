@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 18:07:10 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:47:21 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 	*/
 
 // Variável global para controlar a interrupção ou não do prompt
-unsigned int	prompt_status = 0;
+volatile unsigned int	prompt_status = 0;
 
 void	signal_handle(int sig)
 {
