@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 16:44:56 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:26:34 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,30 @@
 // Variável global para controlar a interrupção ou não do prompt
 unsigned int	prompt_status = 0;
 
-void	sigint_handle(int sig)
+void	signal_handle(int sig)
 {
-	(void)sig;
-	prompt_status = 1;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		prompt_status = 1;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+		return ;
 }
 
 int	main(void)
 {
-	char	*input;
+	char				*input;
+// 	struct sigaction	sa;
 	//struct s_node   minishell_data;
 
-	signal(SIGINT, sigint_handle);
+/* 	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = signal_handle;
+	sigaction(SIGINT, &sa, NULL); */
+	setup_signal_handling();
 	while (42)
 	{
 		if (prompt_status)
@@ -62,4 +70,25 @@ int	main(void)
 	}
 	clear_history();
 	free(input);
+	return (EXIT_SUCCESS);
+}
+
+void	setup_signal_handling(void)
+{
+	struct sigaction	sa;
+
+//	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = signal_handle;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+		perror(("Error setting up SIGINT handler\n"));
+		exit(EXIT_FAILURE);
+	}
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	{
+		perror(("Error setting up SIGQUIT handler\n"));
+		exit(EXIT_FAILURE);
+	}
 }
