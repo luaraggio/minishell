@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 17:54:23 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:07:10 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,24 @@ void	setup_signal_handling(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
+		handle_sig_error(SIGINT);
+	sa.sa_handler = SIG_IGN;
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		handle_sig_error(SIGQUIT);
+}
+
+void	handle_sig_error(int sig)
+{
+	if (sig == SIGINT)
 	{
 		perror(("Error setting up SIGINT handler\n"));
 		exit(EXIT_FAILURE);
 	}
-	sa.sa_handler = SIG_IGN;
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	else if (sig == SIGQUIT)
 	{
 		perror(("Error setting up SIGQUIT handler\n"));
 		exit(EXIT_FAILURE);
 	}
+	else
+		return ;
 }
