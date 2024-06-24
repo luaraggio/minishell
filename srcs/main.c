@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/24 18:05:39 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:50:32 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ int	main(void)
 			prompt_status = 0;
 		input = readline("$ ");
 		if (input == NULL)
-		{
-//			printf("\n");
 			break ;
-		}
 		add_history(input);
 		printf("You entered: %s\n", input);
 		if (ft_strcmp(input, "exit") == 0)
