@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 18:47:21 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:05:39 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(void)
 		input = readline("$ ");
 		if (input == NULL)
 		{
-			printf("\n");
+//			printf("\n");
 			break ;
 		}
 		add_history(input);
