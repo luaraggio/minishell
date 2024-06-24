@@ -6,13 +6,13 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/24 18:50:32 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:04:10 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
- /*
+/*
 	Minishell needs to display a prompt when waiting for a new command.
 
 		We need to:
@@ -23,16 +23,15 @@
 
 		And also:
 		verify_command
-	*/
-
+*/
 // Variável global para controlar a interrupção ou não do prompt
-volatile unsigned int	prompt_status = 0;
+volatile unsigned int	g_prompt_status = 0;
 
 void	signal_handle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		prompt_status = 1;
+		g_prompt_status = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -44,18 +43,13 @@ void	signal_handle(int sig)
 
 int	main(void)
 {
-	char				*input;
-// 	struct sigaction	sa;
-	//struct s_node   minishell_data;
+	char	*input;
 
-/* 	ft_memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = signal_handle;
-	sigaction(SIGINT, &sa, NULL); */
 	setup_signal_handling();
 	while (42)
 	{
-		if (prompt_status)
-			prompt_status = 0;
+		if (g_prompt_status)
+			g_prompt_status = 0;
 		input = readline("$ ");
 		if (input == NULL)
 			break ;
