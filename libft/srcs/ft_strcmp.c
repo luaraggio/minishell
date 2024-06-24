@@ -6,13 +6,13 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:44:55 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/21 21:46:23 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:07:41 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] || s2[i])
