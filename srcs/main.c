@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 21:06:27 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/24 19:04:10 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:40:55 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	setup_signal_handling(void)
 {
 	struct sigaction	sa;
 
-	ft_memset(&sa, 0, sizeof(sa));
+	ft_memset(&sa, 0, sizeof(sa)); // ver se é necessário e pq
 	sa.sa_handler = signal_handle;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
