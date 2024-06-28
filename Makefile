@@ -27,8 +27,16 @@ CC              = cc
 C_FLAGS        ?= -Wall   \
                   -Wextra \
                   -Werror \
-                  -ggdb3
-RL_FLAGS = -lreadline
+                  -ggdb3  \
+
+RL_FLAGS = -lreadline \
+
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
+
+C_FLAGS += -I$(shell brew --prefix readline)/include
+RL_FLAGS += -L$(shell brew --prefix readline)/lib
+endif
 
 # Default c.o. rule
 ${OBJS_PATH}/%.o: ${SRCS_PATH}/%.c
