@@ -25,13 +25,13 @@
 		verify_command
 */
 // Variável global para controlar a interrupção ou não do prompt
-volatile unsigned int	g_prompt_status = 0;
+// volatile unsigned int	g_prompt_status;
 
 void	signal_handle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_prompt_status = 1;
+		//g_prompt_status = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -48,8 +48,6 @@ int	main(void)
 	setup_signal_handling();
 	while (42)
 	{
-		if (g_prompt_status)
-			g_prompt_status = 0;
 		input = readline("$ ");
 		if (input == NULL)
 			break ;
