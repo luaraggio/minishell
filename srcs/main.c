@@ -12,26 +12,12 @@
 
 #include "minishell.h"
 
-/*
-	Minishell needs to display a prompt when waiting for a new command.
-
-		We need to:
-
-		read_command
-		parse_command
-		execute_command
-
-		And also:
-		verify_command
-*/
-// Variável global para controlar a interrupção ou não do prompt
-// volatile unsigned int	g_prompt_status;
+//volatile unsigned int	g_prompt_status;
 
 void	signal_handle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		//g_prompt_status = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -41,10 +27,11 @@ void	signal_handle(int sig)
 		return ;
 }
 
-int	main(void)
+int	main()//int argc, char **argv, char **envp)
 {
+	//t_minishell	*ms;
 	char	*input;
-
+	//inicializar structs e char **envp (o nosso env);
 	setup_signal_handling();
 	while (42)
 	{
@@ -52,12 +39,14 @@ int	main(void)
 		if (input == NULL)
 			break ;
 		add_history(input);
-		printf("You entered: %s\n", input);
 		if (ft_strcmp(input, "exit") == 0)
 			break ;
+		//parse_command(input);
+		//execute_command(ms);
 		free(input);
 	}
 	clear_history();
+	//free(ms);
 	free(input);
 	return (EXIT_SUCCESS);
 }
@@ -66,7 +55,7 @@ void	setup_signal_handling(void)
 {
 	struct sigaction	sa;
 
-	ft_memset(&sa, 0, sizeof(sa)); // ver se é necessário e pq
+	ft_memset(&sa, 0, sizeof(sa));//
 	sa.sa_handler = signal_handle;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;

@@ -16,17 +16,26 @@
 # include "../libft/includes/libft.h"
 # include <stdlib.h>
 # include <signal.h>
+# include <unistd.h> //execv function
+# include <sys/wait.h>
 
 //Readline library
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_node
+typedef struct s_token
 {
-	char	**str; //input que será splitado (ainda vamos organizar como iremos separar os comandos)
-	struct s_node	*next; //ponteiro para a próxima lista para separar os comandos de acordo com '|'(será quando precisaremos usar fork para criar outro processo)
-}	t_node;
+	struct s_node	*next;
+}	t_token;
+
+typedef struct s_minishell
+{
+	char	*input;
+	char	**args;
+	char	**envp;
+	struct s_node	*token;
+}	t_minishell;
 
 enum	e_token
 {
