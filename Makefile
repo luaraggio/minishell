@@ -11,7 +11,11 @@ NO_COLOR		= \033[0m
 H_SRCS          = ./includes
 SRCS_PATH       = ./srcs
 OBJS_PATH       = ./objs
-C_SRCS 			= main.c
+C_SRCS 			= main.c \
+				  grammar.c \
+				  parser.c \
+				  parser_utils.c \
+				  signal_handle.c
 
 C_OBJS		   = ${addprefix ${OBJS_PATH}/, ${C_SRCS:.c=.o}}
 

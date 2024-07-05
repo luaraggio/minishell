@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
+/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:58:53 by dherszen          #+#    #+#             */
-/*   Updated: 2024/06/23 18:04:14 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:02:18 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,23 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_token
+enum	e_substitution
 {
-	struct s_node	*next;
-}	t_token;
-
-typedef struct s_minishell
-{
-	char	*input;
-	char	**args;
-	char	**envp;
-	struct s_node	*token;
-}	t_minishell;
+	ALT_PIPE = 1, // |
+	ALT_OUT,     // >
+	ALT_IN,      // <
+	ALT_APPEND,     // >>
+	ALT_HEREDOC,    // <<
+};
 
 enum	e_token
 {
+	OUT = 1, //>
+	IN, //<
+	APPEND, //>>
+	HEREDOC, //<<
 	CMD,
 	ARG,
-	PIPE,
-	HEREDOC,
 };
 
 enum	e_builtins
@@ -56,7 +54,30 @@ enum	e_builtins
 	EXIT,
 };
 
+typedef struct s_token
+{
+	char	*token_content; //conteúdo do token em si
+	enum e_token	type; //tipo de token
+	struct s_token	*next; //ponteiro para o próximo token
+}	t_token;
+
+typedef struct s_sentence
+{
+	struct s_token	*words;
+	int	fd_in;
+	int	fd_out;
+	pid_t	pid;
+
+}	t_sentence;
+
 void	setup_signal_handling(void);
 void	signal_handle(int sig);
 void	handle_sig_error(int sig);
+char    **split_sentences(char *input);
+int 	ft_parser(char *input);
+int 	is_pipe(char c);
+int 	simple_quote(char c);
+int 	double_quote(char c);
+//int 	is_space_or_tab(int c);
+//int	is_metachar(char c);
 #endif
