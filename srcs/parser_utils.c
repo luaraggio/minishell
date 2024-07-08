@@ -23,12 +23,12 @@ int is_pipe(char c)
     return (c == '|');
 }
 
-int simple_quote(char c)
+int is_simple_quote(char c)
 {
     return (c == '\'');
 }
 
-int double_quote(char c)
+int is_double_quote(char c)
 {
     return (c == '\"');
 }

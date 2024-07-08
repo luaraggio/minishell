@@ -17,14 +17,28 @@ volatile unsigned int	g_status; a global variable to Handle $? -> which should
 expand to the exit status of the most recently executed foreground pipeline.
 
 */
+
+void	*get_sentences(char *input)
+{
+	char	**sentences;
+	int	i;
+
+	sentences = split_sentences(input);
+	i = 0;
+	while (sentences[i])
+	{
+		printf("Sentença[%d]: %s\n", i, sentences[i]);
+		i++;
+	}
+	return (0);
+}
+
 int	main(void)//int argc, char **argv, char **envp)
 {
-	int	i;
 	char	*input;
-	char	**sentences;
 
-	i = 0;
 	setup_signal_handling();
+	//inicializar ac, av e envp
 	printf("Antes do loop\n");
 	while (42)
 	{
@@ -34,21 +48,10 @@ int	main(void)//int argc, char **argv, char **envp)
 		add_history(input);
 		if (ft_strcmp(input, "exit") == 0)
 			break ;
-		/*if (ft_parser(input) != 0)
-			continue;*/
-		//printf("Input depois de substituir o pipe: %s\n", );
-		sentences = split_sentences(input);
-		i = 0;
-		while (sentences[i])
-		{
-			printf("Sentença[%d]: %s\n", i, sentences[i]);
-			i++;
-		}
+		get_sentences(input);
 		free(input);
 	}
-	printf("Depois do loop\n");
 	clear_history();
 	//dar free na matriz de struct s_sentence!!!
-	//free(input);
-	//return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

@@ -29,8 +29,8 @@ enum	e_substitution
 	ALT_PIPE = 1, // |
 	ALT_OUT,     // >
 	ALT_IN,      // <
-	ALT_APPEND,     // >>
-	ALT_HEREDOC,    // <<
+	ALT_APPEND,  // >>
+	ALT_HEREDOC, // <<
 };
 
 enum	e_token
@@ -70,14 +70,22 @@ typedef struct s_sentence
 
 }	t_sentence;
 
+typedef struct s_minishell
+{
+	char	**sentences;
+	int		len_sentences;
+}	t_minishell;
+
+
 void	setup_signal_handling(void);
 void	signal_handle(int sig);
 void	handle_sig_error(int sig);
+void	*get_sentences(char *input);
 char    **split_sentences(char *input);
-int 	ft_parser(char *input);
+//int 	ft_parser(char *input, int i);
 int 	is_pipe(char c);
-int 	simple_quote(char c);
-int 	double_quote(char c);
+int 	is_simple_quote(char c);
+int 	is_double_quote(char c);
 //int 	is_space_or_tab(int c);
 //int	is_metachar(char c);
 #endif
