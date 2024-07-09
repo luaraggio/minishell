@@ -32,28 +32,33 @@ char    **split_sentences(char *input)
     return (ft_split(input, ALT_PIPE));
 }
 
-/*int ft_parser(char *input, int i)
+int parser_input(char *input)
 {
-    int i;
-    struct s_sentence *sentence_array;
 	char             **sentences;
+    //struct s_sentence *sentence_array;
+    //sentence_array = NULL;
 
 	sentences = split_sentences(input);
 	free(input);
 	if (!sentences)
 		return (printf("Deu erro na expansão de pipe OU não tem pipe\n"), 1);
-    sentence_array = malloc(sizeof(t_sentence) * (i + 1));
+    
+}
+       
+/*sentence_array = malloc(sizeof(t_sentence) * (i + 1));
     if (!sentence_array)
     {
         free(sentence_array);
-        return (NULL);
+        return (EXIT_FAILURE);
     }
     i = 0;
     while (sentence_array->words != NULL)
     {
-        sentence_array[i];
-        i++;
+        while (sentence_array[j][i])
+        {
+            printf("Começando a separar por palavras: %s\n", sentence_array[i]);
+            i++;
+        }
     }
 	return (0);
-}
 */

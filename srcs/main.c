@@ -36,20 +36,22 @@ void	*get_sentences(char *input)
 int	main(void)//int argc, char **argv, char **envp)
 {
 	char	*input;
-
 	setup_signal_handling();
 	//inicializar ac, av e envp
 	printf("Antes do loop\n");
 	while (42)
 	{
-		input = readline("$ ");
+		input = readline("minishell>$ ");
 		if (input == NULL)
 			break ;
 		add_history(input);
-		if (ft_strcmp(input, "exit") == 0)
-			break ;
 		get_sentences(input);
-		free(input);
+		parser_input(input);
+		/*
+			expander
+			executor
+		*/
+		free(input); //cleaner
 	}
 	clear_history();
 	//dar free na matriz de struct s_sentence!!!
