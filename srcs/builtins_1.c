@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 17:32:51 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:52:22 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,18 @@ int	ft_cd(char **args)
 	n = 0;
 	n++; // depois tirar
 	n++; // depois tirar
-	if (args[n] == NULL)
+	if (args[n] == NULL || (ft_strcmp(args[n], "~") == 0 && chdir(args[n]) != 0)) // tem que pegar a variável de ambiente HOME para o chdir
 	{
 		perror("minishell: cd: HOME not set\n");
 		return (EXIT_FAILURE);
+	}
+	else if (ft_strcmp(args[n], "-") == 0)
+	{
+		if (chdir(args[n]) != 0) // tem que pegar a variável de ambiente OLDPWD
+		{
+			perror("minishell: cd: OLDPWD not set\n");
+			return (EXIT_FAILURE);
+		}
 	}
 	else if (chdir(args[n]) != 0)
 	{
