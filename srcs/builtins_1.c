@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 17:59:59 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:21:46 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,17 @@ int	ft_cd(char **args)
 	n = 0;
 	n++; // depois tirar
 	n++; // depois tirar
-	if (args[n] == NULL || (!ft_strcmp(args[n], "~")
-			&& chdir(getenv("HOME")) != 0)) // aqui pode usar o getenv ou tem q vir do execve?
+	// precisa atualizar os ENV OLDPWD?
+	// erro segfault qdo digita apenas "cd"
+	if ((!args[n] && chdir(getenv("HOME")) != 0)
+		|| (!ft_strcmp(args[n], "~") && chdir(getenv("HOME")) != 0)) // aqui pode usar o getenv ou tem q vir do execve?
 	{
 		perror("minishell: cd: HOME not set\n");
 		return (EXIT_FAILURE);
 	}
 	else if (!ft_strcmp(args[n], "-"))
 	{
-		if (chdir(getenv("OLDPWD")) != 0) // tem que pegar a variável de ambiente OLDPWD
+		if (chdir(getenv("OLDPWD")) != 0)
 		{
 			perror("minishell: cd: OLDPWD not set\n");
 			return (EXIT_FAILURE);
@@ -60,6 +62,15 @@ int	ft_cd(char **args)
 		ft_putstr_fd("\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	printf("Current working directory: %s\n", getcwd(NULL, 0));
+	return (EXIT_SUCCESS);
+}
+int	ft_pwd(char **args)
+{
+	// pwd pode receber n argumentos mas ele ignora. Se tiver mais de um argumento, ele ignora os outros, sem erro.
+	(void)args;
+	ft_putstr_fd(getcwd(NULL, 0), STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 
@@ -87,5 +98,7 @@ int	main(int argc, char **argv)
 		ft_echo(argv);
 	else if (!ft_strncmp(argv[1], "cd", 2))
 		ft_cd(argv);
+	else if (!ft_strncmp(argv[1], "pwd", 3))
+		ft_pwd(argv);
 	return (EXIT_SUCCESS);
 }
