@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 16:21:12 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:16:55 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,45 @@
 
 int	ft_echo(char **args)
 {
-	if (args[0])
+	int	n;
+	int	newline;
+
+	n = 0;
+	newline = 1;
+	n++; // depois tirar
+	n++; // depois tirar
+	if (args[n] && !ft_strncmp(args[n], "-n", 2))
 	{
-		ft_putstr_fd(args[0], STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		newline = 0;
+		n++;
 	}
-	if (args[1] && !ft_strncmp(args[1], "-n", 2))
+	ft_putstr_fd(args[n], STDOUT_FILENO);
+	if (newline)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (EXIT_SUCCESS);
+}
+
+void	print_builtin(char **args)
+{
+	int	n;
+
+	n = 0;
+	n++; // depois tirar
+	n++; // depois tirar
+	while (args[n])
+	{
+		if (n - 2 == 0 ) // depois mudar para n == 0
+			printf("Command: %s\n", args[n - 1]);
+		printf("Arg %d: %s\n", n - 1, args[n]); // depois mudar para n
+		n++;
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	print_builtin(argv);
+	(void)argc;
+	if (!ft_strncmp(argv[1], "echo", 4))
+		ft_echo(argv);
 	return (EXIT_SUCCESS);
 }
