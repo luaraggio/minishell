@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:08:55 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 16:31:12 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:33:06 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h" // depois tirar ou colocar # include "minishell.h no lugar de # include "builtins.h em cada arquivo das builtins
 
 int	ft_echo(char **arg);
+int	ft_cd(char **args);
 
 
 #endif

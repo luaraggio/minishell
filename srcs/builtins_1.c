@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 17:16:55 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:32:51 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@ int	ft_echo(char **args)
 	return (EXIT_SUCCESS);
 }
 
+int	ft_cd(char **args)
+{
+	int	n;
+
+	n = 0;
+	n++; // depois tirar
+	n++; // depois tirar
+	if (args[n] == NULL)
+	{
+		perror("minishell: cd: HOME not set\n");
+		return (EXIT_FAILURE);
+	}
+	else if (chdir(args[n]) != 0)
+	{
+		ft_putstr_fd("minishell: cd: No such file or directory\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
 void	print_builtin(char **args)
 {
 	int	n;
@@ -54,5 +74,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	if (!ft_strncmp(argv[1], "echo", 4))
 		ft_echo(argv);
+	else if (!ft_strncmp(argv[1], "cd", 2))
+		ft_cd(argv);
 	return (EXIT_SUCCESS);
 }
