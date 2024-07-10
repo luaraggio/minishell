@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 17:52:22 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:59:59 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,15 @@ int	ft_cd(char **args)
 	n = 0;
 	n++; // depois tirar
 	n++; // depois tirar
-	if (args[n] == NULL || (ft_strcmp(args[n], "~") == 0 && chdir(args[n]) != 0)) // tem que pegar a variável de ambiente HOME para o chdir
+	if (args[n] == NULL || (!ft_strcmp(args[n], "~")
+			&& chdir(getenv("HOME")) != 0)) // aqui pode usar o getenv ou tem q vir do execve?
 	{
 		perror("minishell: cd: HOME not set\n");
 		return (EXIT_FAILURE);
 	}
-	else if (ft_strcmp(args[n], "-") == 0)
+	else if (!ft_strcmp(args[n], "-"))
 	{
-		if (chdir(args[n]) != 0) // tem que pegar a variável de ambiente OLDPWD
+		if (chdir(getenv("OLDPWD")) != 0) // tem que pegar a variável de ambiente OLDPWD
 		{
 			perror("minishell: cd: OLDPWD not set\n");
 			return (EXIT_FAILURE);
@@ -54,7 +55,9 @@ int	ft_cd(char **args)
 	}
 	else if (chdir(args[n]) != 0)
 	{
-		ft_putstr_fd("minishell: cd: No such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: No such file or directory: ", STDERR_FILENO);
+		ft_putstr_fd(args[n], STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
