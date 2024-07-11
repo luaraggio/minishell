@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 19:21:46 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:33:13 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,52 @@ int	ft_pwd(char **args)
 	return (EXIT_SUCCESS);
 }
 
+int	ft_env(char **envp)
+{
+	while (*envp)
+	{
+		ft_putstr_fd(*envp, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		envp++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 void	print_builtin(char **args)
 {
 	int	n;
 
-	n = 0;
-	n++; // depois tirar
-	n++; // depois tirar
-	while (args[n])
+	if (!args[1])
 	{
-		if (n - 2 == 0 ) // depois mudar para n == 0
-			printf("Command: %s\n", args[n - 1]);
-		printf("Arg %d: %s\n", n - 1, args[n]); // depois mudar para n
-		n++;
+		printf("No command provided\n");
+		return ;
+	}
+	n = 2; // depois mudar para 0 ou 1?
+	if (args[n])
+	{
+		while (args[n])
+		{
+			if (n == 2 ) // depois mudar para n == 1?
+				printf("Command: %s\n", args[n - 1]);
+			printf("Arg %d: %s\n", n - 1, args[n]); // depois mudar para n
+			n++;
+		}
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	print_builtin(argv);
-	(void)argc;
-	if (!ft_strncmp(argv[1], "echo", 4))
-		ft_echo(argv);
-	else if (!ft_strncmp(argv[1], "cd", 2))
-		ft_cd(argv);
-	else if (!ft_strncmp(argv[1], "pwd", 3))
-		ft_pwd(argv);
+	if (argc > 1)
+	{
+		if (!ft_strncmp(argv[1], "echo", 4))
+			ft_echo(argv);
+		else if (!ft_strncmp(argv[1], "cd", 2))
+			ft_cd(argv);
+		else if (!ft_strncmp(argv[1], "pwd", 3))
+			ft_pwd(argv);
+		else if (!ft_strncmp(argv[1], "env", 3))
+			ft_env(envp);
+	}
 	return (EXIT_SUCCESS);
 }
