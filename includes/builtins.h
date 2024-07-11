@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:08:55 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/10 17:33:06 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:34:21 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 int	ft_echo(char **arg);
 int	ft_cd(char **args);
+int	ft_pwd(char **args);
 
 
 #endif
