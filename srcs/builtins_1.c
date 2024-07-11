@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/11 11:33:13 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:12:09 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ int	ft_env(char **envp)
 	return (EXIT_SUCCESS);
 }
 
+int	ft_unset(*t_env env, char *var)
+{
+
+}
+
 void	print_builtin(char **args)
 {
 	int	n;
@@ -105,6 +110,35 @@ void	print_builtin(char **args)
 			n++;
 		}
 	}
+}
+
+size_t	get_env_size(char **envp)
+{
+	size_t	size;
+
+	size = 0;
+	while (envp[size])
+		size++;
+	return (size);
+}
+
+t_env	*init_env(char **envp)
+{
+	t_env	env;
+	t_env	*env_list;
+	size_t	size;
+	size_t	n;
+
+	size = get_env_size(envp);
+	env_list = (t_env *)malloc(sizeof(t_env) * size);
+	if (!env_list)
+		return (NULL);
+	n = -1;
+	while (n++ < size)
+	{
+// strndup or strncpy + strchr
+	}
+	return (env_list);
 }
 
 int	main(int argc, char **argv, char **envp)
