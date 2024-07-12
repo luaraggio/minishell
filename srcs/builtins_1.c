@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:48:45 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/11 17:12:09 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:36:32 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,10 @@ int	ft_pwd(char **args)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_env(char **envp)
-{
-	while (*envp)
-	{
-		ft_putstr_fd(*envp, STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		envp++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-int	ft_unset(*t_env env, char *var)
+/* int	ft_unset(*t_env env, char *var)
 {
 
-}
+} */
 
 void	print_builtin(char **args)
 {
@@ -112,38 +101,10 @@ void	print_builtin(char **args)
 	}
 }
 
-size_t	get_env_size(char **envp)
-{
-	size_t	size;
-
-	size = 0;
-	while (envp[size])
-		size++;
-	return (size);
-}
-
-t_env	*init_env(char **envp)
-{
-	t_env	env;
-	t_env	*env_list;
-	size_t	size;
-	size_t	n;
-
-	size = get_env_size(envp);
-	env_list = (t_env *)malloc(sizeof(t_env) * size);
-	if (!env_list)
-		return (NULL);
-	n = -1;
-	while (n++ < size)
-	{
-// strndup or strncpy + strchr
-	}
-	return (env_list);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	print_builtin(argv);
+	printf("Env size: %zu\n", get_env_size(envp));
 	if (argc > 1)
 	{
 		if (!ft_strncmp(argv[1], "echo", 4))
