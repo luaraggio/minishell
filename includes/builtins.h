@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:08:55 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/12 16:58:04 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:06:26 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ size_t	get_env_size(char **envp);
 t_env	*new_env(char *key, char *value);
 char	*get_env_key(char *env);
 char	*get_env_value(char *env);
-t_env	*init_env(char **envp);
+void	add_env(t_env **env_list, t_env *new);
+void	init_env(char **envp, t_env **env_list);
 
 #endif

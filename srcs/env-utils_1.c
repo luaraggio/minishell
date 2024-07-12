@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:36:56 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/12 17:53:25 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:04:46 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,17 @@ t_env	*new_env(char *key, char *value)
 	return (node);
 }
 
-char	*get_env_key(char *env)
+void	add_env(t_env **env_list, t_env *new)
 {
-	char	*key;
+	t_env	*tmp;
 
-	key = ft_strndup(env, ft_strchr(env, '=') - env);
-	return (key);
+	if (!*env_list)
+	{
+		*env_list = new;
+		return ;
+	}
+	tmp = *env_list;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
 }
-
-char	*get_env_value(char *env)
-{
-	char	*value;
-
-	value = ft_strdup(ft_strchr(env, '=') + 1);
-	return (value);
-}
-
-
