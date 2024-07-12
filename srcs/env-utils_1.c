@@ -6,7 +6,7 @@
 /*   By: dherszen <dherszen@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:36:56 by dherszen          #+#    #+#             */
-/*   Updated: 2024/07/12 17:08:40 by dherszen         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:53:25 by dherszen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_env	*new_env(char *key, char *value)
 char	*get_env_key(char *env)
 {
 	char	*key;
-	char	*value;
 
 	key = ft_strndup(env, ft_strchr(env, '=') - env);
 	return (key);
