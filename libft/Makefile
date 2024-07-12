@@ -19,13 +19,14 @@ LIBFT_SRCS	= ft_atoi.c         \
               ft_memmove.c      \
               ft_memset.c       \
               ft_strchr.c       \
+              ft_strcmp.c       \
               ft_strdup.c       \
               ft_strjoin.c      \
               ft_strlcat.c      \
               ft_strlcpy.c      \
               ft_strlen.c       \
-              ft_strcmp.c       \
               ft_strncmp.c      \
+              ft_strndup.c      \
               ft_strnstr.c      \
               ft_strrchr.c      \
               ft_strtrim.c      \
@@ -79,18 +80,18 @@ AR			= ar ${AR_FLAGS}
 BONUS_OBJS	= ${addprefix ${C_PATH}, ${BONUS_SRCS:.c=.o}}
 
 .c.o:
-			@${CC} ${C_FLAGS} -c $< -o ${<:.c=.o} -I${H_SRCS}
+			${CC} ${C_FLAGS} -c $< -o ${<:.c=.o} -I${H_SRCS}
 
 ${NAME}:	${C_OBJS}
-			@${AR} ${NAME} ${C_OBJS} ${BONUS_OBJS}
+			${AR} ${NAME} ${C_OBJS} ${BONUS_OBJS}
 
 all:		${NAME}
 
 clean:
-			@${RM} ${C_OBJS} ${BONUS_OBJS}
+			${RM} ${C_OBJS} ${BONUS_OBJS}
 
 fclean:		clean
-			@${RM} ${NAME}
+			${RM} ${NAME}
 
 re:			fclean all
 
