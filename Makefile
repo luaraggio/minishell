@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+         #
+#    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/07/29 22:20:09 by lpaixao-         ###   ########.fr        #
+#    Updated: 2024/08/15 14:16:05 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,23 +37,28 @@ srcs/main/main.c \
 srcs/linked_list/list_functions.c \
 srcs/linked_list/change_list.c \
 srcs/cleaning/clear_funct.c \
+srcs/env/env_utils.c \
 srcs/builtints/env/env_builtins.c \
-srcs/builtints/env/env_utils.c \
+srcs/builtints/env/env_bt_utils.c \
 srcs/parser/parser.c \
 srcs/parser/quot_marks_validation/parser_quotation_marks_validation.c \
 srcs/parser/quot_marks_validation/str_of_invalid_metas.c \
 srcs/parser/spaces_around_metas/spaces_around_metas_validation.c \
 srcs/parser/spaces_around_metas/strlen_spaces_around_metas.c \
 srcs/parser/meta_split.c \
+srcs/parser/tokenize_sentence/tokenize_sentence.c \
 srcs/lexer/lexer.c \
 srcs/lexer/find_token/set_token_1.c \
-srcs/lexer/find_token/set_token_2.c \
-srcs/general_metachar_functions/metacharacters_utils.c \
+srcs/general_functions/metacharacters_utils.c \
+srcs/general_functions/is_chars_functions.c \
+srcs/general_functions/is_chars_functions_2.c \
 srcs/main/prompt_and_inputs.c \
 srcs/builtints/builtins.c \
 srcs/builtints/pwd.c \
 srcs/parser/linked_list_input/create_list_input.c \
-srcs/signals/signal_handle.c
+srcs/signals/signal_handle.c \
+srcs/exec/execution.c \
+srcs/exec/exec_utils.c
 
 OBJS = ${SRCS:.c=.o}
 

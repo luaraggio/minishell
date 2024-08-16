@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_and_inputs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
+/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:02:36 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/07/30 14:40:43 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:09:52 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int	run_commands(t_command *command)
 		if (is_builtin(list->value) == TRUE)
 			ret = run_builtin(command, list);
 		else
-			printf("Não é builtin. Ainda estou criando as builtins\n");
+		{
+			printf("Não é builtin\n");
+			run_execve(command, list);
+		}
 		if (ret == ERROR)
 		{
 //			printf("Validar erro\n");

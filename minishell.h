@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
+/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/12 15:12:23 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:00:06 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,15 @@ typedef struct s_env
 
 typedef struct s_node
 {
-	char			*key; // apagar depois
-	char			*value; //ls    |     ECHO ------- TRANSFORMAR EM UMA MATRIZ
-	int				token;  // e_token  
+	char			**value; //ls    |     ECHO ------- TRANSFORMAR EM UMA MATRIZ
+	int				token;  // e_token
 	struct s_node	*next;
 }	t_node;
 
 typedef struct s_command
 {
 	char	*input;
-	char	**input_matrix; // 
+	char	**input_matrix;
 	char	*invalid_metas;
 	char	*prompt;
 	t_node	*l_input;
@@ -114,6 +113,19 @@ void	make_list_from_input(t_command *command);
 t_node	*create_first_input_node(char *s, t_node *list);
 t_node	*create_last_input_node(char *s, t_node *prev);
 
+// is?
+int		is_pipe(char c);
+int 	is_simple_quote(char c);
+int 	is_double_quote(char c);
+int		is_append(char *s);
+int		is_redir_out(char *s);
+int		is_redir_in(char *s);
+int		is_heredoc(char *s);
+int		is_file(t_node *node, t_node *list);
+int		is_redirect(int n);
+int		is_valid_exp_char(char c);
+//int		is_char(char *s, char c);
+
 // list
 void	remove_env(t_env *node, t_env *start);
 void	change_env_value(t_env *node, char *str);
@@ -122,32 +134,35 @@ void	create_new_ev(char *str, t_env *env_list);
 // lexer
 void	lexer(t_command *command);
 void	set_token(t_node *node, t_node *first);
-int		is_builtin(char *s);
+int		is_builtin(char **s);
 //int		is_exec(char *s);
-int		is_pipe(char *s);
-int		is_append(char *s);
-int		is_redir_out(char *s);
-int		is_redir_in(char *s);
-int		is_heredoc(char *s);
-int		is_file(t_node *node, t_node *list);
-int		is_redirect(int n);
+char    **tokenize_sentence(char *input);
 
 // Built In
 int		run_builtin(t_command *command, t_node *node);
 int		pwd(t_command *command);
-void	my_export(char **str, t_command *command);
+void	my_export(t_env *env, t_node *node_i);
 void	print_env_for_export(t_env *list);
-void	my_unset(char *name, t_command *command);
+void    my_unset(t_env *env, t_node *node_i);
 int		check_export_error(char **str);
+int		is_valid_ev(char *str);
 char	*validate_quot_marks_for_export(char *str);
+
+// First part of execution -> execve
+void	run_execve(t_command *command, t_node *list);
+void	print_env_array(char **envp);
+char	*get_path(t_command *command);
+char	**envp_list_to_array(t_env *env_list);
+int		env_list_size(t_env *list);
 
 // Clear
 void	clear_input(t_command *command);
-void    clear_all(t_command *command);
+void    final_clear(t_command *command);
 void	free_list(t_node *list);
-void	free_node(t_env *list);
+void	clear_loop_end(t_command *command);
+void	free_env(t_env *list);
 
-// signals
+// Signals
 void	signal_handle(int sig);
 void	setup_signal_handling(void);
 void	handle_sig_error(int sig);

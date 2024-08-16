@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env_bt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:32:50 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/08 01:03:35 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:31:16 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-
-void	get_env(t_command *command)
-{
-	extern char	**environ;
-	t_env		*temp;
-	int			i;
-	int			j;
-
-	i = 0;
-	j = 0;
-	command->my_env = NULL;
-	while (environ[i])
-		i++;
-	command->my_env = create_first_env_node(environ[j], command->my_env);
-	temp = command->my_env;
-	while (++j < i)
-		temp = create_last_env_node(environ[j], temp);
-}
 
 void	print_env_for_export(t_env *list)
 {
@@ -42,21 +24,38 @@ void	print_env_for_export(t_env *list)
 	}
 }
 
-t_env	*my_getenv_by_list(const char *name, t_env *my_env)
+int	is_valid_ev(char *str)
 {
-	t_env	*temp;
-	int		size_key;
+	int	i;
 
-	temp = my_env;
-	while (temp)
+	i = 0;
+	if (is_valid_exp_char(str[i]) == TRUE)
 	{
-		size_key = my_strlen(temp->key);
-		if (my_strncmp(name, temp->key, size_key) == 0)
-			return (temp);
-		temp = temp->next;
+		while (is_valid_exp_char(str[i]) == TRUE)
+		{
+			if (is_valid_exp_char(str[i]) == TRUE)
+				i++;
+			else
+				return (ERROR);
+		}
 	}
-	return (NULL);
+	else
+		return (ERROR);
+	if (str[i] == '=')
+		i++;
+	else
+		return (ERROR);
+	while (is_valid_exp_char(str[i]) == TRUE) //Fazer outra função! Válidos: #
+	{
+		if (is_valid_exp_char(str[i]) == TRUE)
+			i++;
+		else
+			return (ERROR);
+	}
+	return (NO_ERROR);
 }
+
+// -----------------------------------------------------------------
 
 int	check_export_error(char **str)
 {
