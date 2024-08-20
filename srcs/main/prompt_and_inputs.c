@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:02:36 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/15 20:09:52 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/08/20 13:31:58 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	run_commands(t_command *command)
 		else
 		{
 			printf("Não é builtin\n");
-			run_execve(command, list);
+			ret = run_execve(command, list);
 		}
 		if (ret == ERROR)
 		{

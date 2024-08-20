@@ -6,13 +6,13 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:11:22 by lraggio           #+#    #+#             */
-/*   Updated: 2024/08/15 21:06:12 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/08/20 13:29:29 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char     *get_path(t_command *command)
+char     *get_path_var(t_command *command)
 {
     t_env   *get_path; //permite armazenar o resultado de "path" a partir da nossa envp
     char    *path;
@@ -28,62 +28,74 @@ char     *get_path(t_command *command)
     return (path);
 }
 
-char    *get_absolute_path(t_command *command)
+char    *get_absolute_path(t_command *command, t_node *node)
 {
-    
-}
+    const char  *command_name;
+    char    *path;
+    char    **dir;
+    char    *absolute_path;
+    int     i;
 
-
-char    **envp_list_to_array(t_env *env_list)
-{
-    int         i; //quantidade de args
-    char        **array;
-
-    i = env_list_size(env_list);
-    array = malloc(sizeof(char *) * (i + 1));
-    if (!array)
-    {
-        perror("Erro: alocação de memória das nossas variáveis de ambiente");
-        return (NULL);
-    }
     i = 0;
-    while(env_list) // "KEY=VALUE"
+    command_name = node->value[0];
+    path = get_path_var(command);
+    if (!path)
+        return (NULL);
+    dir = my_split(path, ':');
+    if (!dir)
+        return (NULL);
+    while (dir[i])
     {
-        array[i] = my_strjoin(env_list->key, "=");
-        array[i] = my_strjoin(array[i], env_list->value);
-        env_list = env_list->next;
+        absolute_path = my_strjoin(dir[i], "/");
+        absolute_path = my_strjoin(absolute_path, command_name);
+        if (access(absolute_path, X_OK) == 0)
+        {
+            free_matrix(dir);
+            return(absolute_path);
+        }
+        free(absolute_path);
         i++;
     }
-    array[i] = NULL;
-    return (array);
+    free_matrix(dir);
+    return (NULL);
 }
 
-void    run_execve(t_command *command, t_node *list)
+int    run_execve(t_command *command, t_node *list) //-> mudar o retorno para int!
 {
     t_node  *node;
     char    *path;
     char    **env_array;
     char    **args;
 
+    if (!list || !list->value)
+    {
+        perror("Erro na lista de comandos");
+        return (ERROR);
+    }
     node = list;
     args = node->value;
     env_array = envp_list_to_array(command->my_env);
     if (!env_array)
     {
         perror("Erro ao converter lista de ambiente para array");
-        exit(EXIT_FAILURE);
+        return (ERROR);
     }
-    path = get_path(command);
+    path = get_absolute_path(command, list);
     if (!path)
     {
         free(env_array);
-        exit(EXIT_FAILURE);
+        printf("Erro: Comando '%s' não encontrado\n", list->value[0]);
+        return (ERROR);
+
     }
     if (execve(path, args, env_array) == -1)
     {
         perror("Erro ao executar o comando");
-        free(env_array); // Liberar memória alocada
-        exit(EXIT_FAILURE);
+        free(env_array);
+        free(path);
+        return (ERROR);
     }
     free(env_array);
+    free(path);
+    return (NO_ERROR);
 }
