@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/20 13:28:37 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/08/22 10:48:40 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,17 @@ char	*validate_quot_marks_for_export(char *str);
 
 // First part of execution -> execve
 void	print_env_array(char **envp);
-void    free_matrix(char **matrix);
+void	free_matrix(char **matrix);
+void	exec_clean(char *path, char **env_array);
 char	*get_path_var(t_command *command);
 char	**envp_list_to_array(t_env *env_list);
-char    *get_absolute_path(t_command *command, t_node *list);
+char	*get_absolute_path(t_command *command, t_node *list);
 int		run_execve(t_command *command, t_node *list);
+int		args_exec(char *path, t_node *list, char **env_array);
 int		env_list_size(t_env *list);
+
+// General Execution
+int		has_pipe(t_node *list);
 
 // Clear
 void	clear_input(t_command *command);

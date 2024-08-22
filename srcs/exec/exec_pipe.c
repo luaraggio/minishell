@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/14 17:46:24 by lraggio           #+#    #+#             */
-/*   Updated: 2024/08/22 12:08:18 by lraggio          ###   ########.fr       */
+/*   Created: 2024/08/22 12:06:43 by lraggio           #+#    #+#             */
+/*   Updated: 2024/08/22 17:15:57 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int     env_list_size(t_env *list)
+/*
+Builtin ou não builtin?
+*/
+
+/*void    pipe_execution(t_command *command, t_node *list)
 {
-    int         i;
+    int     pipefd[2];
+    int     pid;
 
-    i = 0;
-    while (list)
+
+    if (pid == -1)
     {
-        i++;
-        list = list->next;
-    }
-    return (i);
-}
 
-/*void	print_env_array(char **envp)
-{
-    int     i;
-
-    i = 0;
-    while (envp[i])
-    {
-        printf("%s\n", envp[i]);
-        i++;
     }
+    pid = fork();
 }*/

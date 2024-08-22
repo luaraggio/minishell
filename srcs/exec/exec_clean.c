@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   exec_clean.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/14 17:46:24 by lraggio           #+#    #+#             */
-/*   Updated: 2024/08/22 12:08:18 by lraggio          ###   ########.fr       */
+/*   Created: 2024/08/21 16:17:35 by lraggio           #+#    #+#             */
+/*   Updated: 2024/08/21 16:18:21 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int     env_list_size(t_env *list)
-{
-    int         i;
-
-    i = 0;
-    while (list)
-    {
-        i++;
-        list = list->next;
-    }
-    return (i);
-}
-
-/*void	print_env_array(char **envp)
+void    free_matrix(char **matrix)
 {
     int     i;
 
+    if (!matrix)
+        return ;
+
     i = 0;
-    while (envp[i])
+    while (matrix[i])
     {
-        printf("%s\n", envp[i]);
+        free(matrix[i]);
         i++;
     }
-}*/
+    free(matrix);
+}
+
+void    exec_clean(char *path, char **env_array)
+{
+    free(path);
+    free(env_array);
+}

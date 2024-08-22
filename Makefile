@@ -6,7 +6,7 @@
 #    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/08/15 14:16:05 by lraggio          ###   ########.fr        #
+#    Updated: 2024/08/22 12:19:55 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,11 @@ srcs/builtints/pwd.c \
 srcs/parser/linked_list_input/create_list_input.c \
 srcs/signals/signal_handle.c \
 srcs/exec/execution.c \
-srcs/exec/exec_utils.c
+srcs/exec/exec_utils.c \
+srcs/exec/exec_args.c \
+srcs/exec/exec_clean.c \
+srcs/exec/exec_pipe.c \
+srcs/exec/pipe_utils.c
 
 OBJS = ${SRCS:.c=.o}
 

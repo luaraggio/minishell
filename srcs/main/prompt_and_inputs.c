@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:02:36 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/20 13:31:58 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/08/22 17:16:02 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,35 @@ int	run_commands(t_command *command)
 
 	ret = NO_INFO;
 	list = command->l_input;
-	while (list)
+	if (has_pipe(list) == TRUE)
 	{
-		if (is_builtin(list->value) == TRUE)
-			ret = run_builtin(command, list);
-		else
+		ret = (printf("Tem pipe, mas ainda falta implementar essa parte\n"), NO_ERROR);
+		/*while (list)
 		{
-			printf("Não é builtin\n");
-			ret = run_execve(command, list);
+			ret = pipe_execution(command, list);
+			list = list->next;
+		}*/
+	}
+	else
+	{
+		while (list)
+		{
+			if (is_builtin(list->value) == TRUE) //caminho usual do builtin
+				ret = run_builtin(command, list);
+			//verificar tokens e ver "key" deles, p/ novos caminhos de execução
+			else
+				ret = run_execve(command, list); //execve como child proccess
+			list = list->next;
 		}
-		if (ret == ERROR)
+		printf("Não tem pipe!\n");
+	}
+	return (ret);
+}
+
+/*if (ret == ERROR)
 		{
 //			printf("Validar erro\n");
 			return (ERROR);
 		}
 		else if (ret == CLOSE)
-			return (CLOSE);
-		list = list->next;
-	}
-	return (ret);
-}
+			return (CLOSE);*/
