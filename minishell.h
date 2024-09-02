@@ -6,12 +6,12 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/22 10:48:40 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/08/27 21:02:11 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "libs/my_libft/libft.h"
 # include <unistd.h>
@@ -21,6 +21,9 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <string.h>
+# include <fcntl.h>
+# include <errno.h>
 
 enum e_flag {
 	FALSE = 0,
@@ -72,7 +75,7 @@ typedef struct s_env
 
 typedef struct s_node
 {
-	char			**value; //ls    |     ECHO ------- TRANSFORMAR EM UMA MATRIZ
+	char			**value;
 	int				token;  // e_token
 	struct s_node	*next;
 }	t_node;
@@ -124,6 +127,7 @@ int		is_heredoc(char *s);
 int		is_file(t_node *node, t_node *list);
 int		is_redirect(int n);
 int		is_valid_exp_char(char c);
+int		is_all_whitespace(const char *str);
 //int		is_char(char *s, char c);
 
 // list
@@ -149,7 +153,7 @@ int		is_valid_ev(char *str);
 char	*validate_quot_marks_for_export(char *str);
 
 // First part of execution -> execve
-void	print_env_array(char **envp);
+//void	print_env_array(char **envp);
 void	free_matrix(char **matrix);
 void	exec_clean(char *path, char **env_array);
 char	*get_path_var(t_command *command);
@@ -161,6 +165,7 @@ int		env_list_size(t_env *list);
 
 // General Execution
 int		has_pipe(t_node *list);
+int		pipe_execution(t_command *command, t_node *list);
 
 // Clear
 void	clear_input(t_command *command);

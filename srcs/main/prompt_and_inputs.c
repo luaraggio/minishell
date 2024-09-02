@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:02:36 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/22 17:16:02 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/08/27 21:54:10 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,22 @@ int	run_commands(t_command *command)
 
 	ret = NO_INFO;
 	list = command->l_input;
-	if (has_pipe(list) == TRUE)
+	while (list)
 	{
-		ret = (printf("Tem pipe, mas ainda falta implementar essa parte\n"), NO_ERROR);
-		/*while (list)
+		if (has_pipe(list) == TRUE)
 		{
+			printf("Tem pipe.\n");
 			ret = pipe_execution(command, list);
-			list = list->next;
-		}*/
-	}
-	else
-	{
-		while (list)
-		{
-			if (is_builtin(list->value) == TRUE) //caminho usual do builtin
-				ret = run_builtin(command, list);
-			//verificar tokens e ver "key" deles, p/ novos caminhos de execução
-			else
-				ret = run_execve(command, list); //execve como child proccess
-			list = list->next;
 		}
-		printf("Não tem pipe!\n");
+		else
+		{
+			printf("Não tem pipe!\n");
+			if (is_builtin(list->value) == TRUE)
+				ret = (run_builtin(command, list));
+			else
+				ret = (run_execve(command, list));
+		}
+		list = list->next;
 	}
 	return (ret);
 }
