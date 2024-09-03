@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:07:06 by lraggio           #+#    #+#             */
-/*   Updated: 2024/08/21 16:32:26 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:51:40 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,21 @@ char    **envp_list_to_array(t_env *env_list)
     }
     array[i] = NULL;
     return (array);
+}
+
+char    **cmds_list_to_array(t_node *cmds)
+{
+    int     list_size;
+    char    **args;
+
+    list_size = env_list_size(cmds);
+    array = malloc(sizeof(char *) * (list_size + 1));
+    if (!args)
+        return(perror("Erro: alocação de cmds_list_to_array"), NULL);
+    while()
+    {
+
+    }
 }
 
 int     args_exec(char *path, t_node *list, char **env_array)

@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/27 21:02:11 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/03 16:24:15 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ int		is_heredoc(char *s);
 int		is_file(t_node *node, t_node *list);
 int		is_redirect(int n);
 int		is_valid_exp_char(char c);
-int		is_all_whitespace(const char *str);
 //int		is_char(char *s, char c);
 
 // list

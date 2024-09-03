@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:11:22 by lraggio           #+#    #+#             */
-/*   Updated: 2024/08/26 21:21:58 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:49:42 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int    run_execve(t_command *command, t_node *list)
     if (args_exec(path, list, env_array) == ERROR)
         return (exec_clean(path, env_array), ERROR);
     node = list;
-    args = node->value;
+    args = cmds_list_to_array(node);
+    //args = node->value;
     pid = fork();
     if (pid == 0)
     {
