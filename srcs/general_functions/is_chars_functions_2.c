@@ -6,7 +6,7 @@
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:36:37 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/14 12:42:44 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:44:49 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_heredoc(char *s)
 		return (TRUE);
 	return (FALSE);
 }
-
+/*
 int	is_file(t_node *node, t_node *list)
 {
 	t_node	*temp;
@@ -45,8 +45,18 @@ int	is_file(t_node *node, t_node *list)
 		temp = temp->next;
 	}
 	return (FALSE);
+}*/
+
+int	is_redirect(char *str)
+{
+	if (my_strcmp(str, ">>") == 0 || my_strcmp(str, "<<") == 0)
+		return (TRUE);
+	else if (my_strcmp(str, ">") == 0 || my_strcmp(str, "<") == 0)
+		return (TRUE);
+	return (FALSE);
 }
 
+/*
 int	is_redirect(int n)
 {
 	if (n == REDIR_APPEND || n == REDIR_HEREDOC)
@@ -54,4 +64,4 @@ int	is_redirect(int n)
 	else if (n == REDIR_OUT || n == REDIR_IN)
 		return (TRUE);
 	return (FALSE);
-}
+}*/

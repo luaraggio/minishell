@@ -6,47 +6,47 @@
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:13:01 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/14 16:06:30 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:59:51 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static int	pre_export(t_command *command, t_node *node);
-
-int	run_builtin(t_command *command, t_node *node)
+//static int	pre_export(t_command *command, t_node *node);
+/*
+int	run_builtin(t_command *command, t_node *node, int fd)
 {
 	int		ret;
 
 	ret = NO_ERROR;
 	if (my_strcmp(node->value[0], "echo") == 0)
-		printf("Chamar função echo\n");
+		my_echo(node, fd);
 	else if (my_strcmp(node->value[0], "cd") == 0)
-		printf("Chamar função cd\n");
+		ret = my_cd(node, command->my_env);
 	else if (my_strcmp(node->value[0], "pwd") == 0)
 		ret = pwd(command);
 	else if (my_strcmp(node->value[0], "export") == 0)
-		ret = pre_export(command, node);
+		my_export(command->my_env, node, fd);
 	else if (my_strcmp(node->value[0], "unset") == 0)
 		my_unset(command->my_env, node);
 	else if (my_strcmp(node->value[0], "env") == 0)
-		print_env(command->my_env);
+		print_env(command->my_env, fd);
 	else if (my_strcmp(node->value[0], "exit") == 0) // Se der tempo, colocar parâmetros
 		ret = CLOSE;
 	return (ret);
-}
-
+}*/
+/*
 static int	pre_export(t_command *command, t_node *node)
 {
-	//char    *str;
+	char    *str;
 	int	ret;
 
-	//str = NULL;
+	str = NULL;
 	ret = NO_ERROR;
 	(void)command;
 	(void)node;
 	printf("Entrou na pre_export\n");
-	/*
+	
 	if (my_strlen(*node->value) > 6)
 //	{
 //		printf("Entrou no if de 'strlen'\n");
@@ -67,6 +67,6 @@ static int	pre_export(t_command *command, t_node *node)
 		my_export(&str, command);
 //		printf("Passou pela my_export c str = %s\n", str);
 	}
-	free(str);*/
+	free(str);
 	return (ret);
-}
+}*/

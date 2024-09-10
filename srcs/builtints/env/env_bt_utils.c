@@ -6,20 +6,25 @@
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:32:50 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/15 13:31:16 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:43:54 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
 
-void	print_env_for_export(t_env *list)
+void	print_env_for_export(t_env *list, int fd)
 {
 	t_env	*temp;
 
 	temp = list;
 	while (temp)
 	{
-		my_printf("declare -x %s=%s\n", temp->key, temp->value);
+		my_putstr_fd("declare -x ", fd);
+		my_putstr_fd(temp->key, fd);
+		my_putstr_fd("=", fd);
+		my_putstr_fd(temp->value, fd);
+		my_putstr_fd("\n", fd);
+		//my_printf("declare -x %s=%s\n", temp->key, temp->value);
 		temp = temp->next;
 	}
 }
@@ -29,12 +34,14 @@ int	is_valid_ev(char *str)
 	int	i;
 
 	i = 0;
-	if (is_valid_exp_char(str[i]) == TRUE)
+	if (str[0] != '=' && is_valid_exp_char(str[0]) == TRUE)
 	{
-		while (is_valid_exp_char(str[i]) == TRUE)
+		while (str[i])
 		{
 			if (is_valid_exp_char(str[i]) == TRUE)
 				i++;
+			else if (str[i] == '=')
+				break ;
 			else
 				return (ERROR);
 		}
@@ -45,18 +52,33 @@ int	is_valid_ev(char *str)
 		i++;
 	else
 		return (ERROR);
-	while (is_valid_exp_char(str[i]) == TRUE) //Fazer outra função! Válidos: #
-	{
-		if (is_valid_exp_char(str[i]) == TRUE)
-			i++;
-		else
-			return (ERROR);
-	}
 	return (NO_ERROR);
 }
 
-// -----------------------------------------------------------------
+void	change_env_value(t_env *node, char *str)
+{
+	free(node->value);
+	node->value = my_strdup(str);
+}
 
+void	create_new_ev(char *str, t_env *env)
+{
+	t_env	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (temp->next == NULL)
+		{
+			create_last_env_node(str, temp);
+			break ;
+		}
+		temp = temp->next;
+	}
+}
+
+// -----------------------------------------------------------------
+/*
 int	check_export_error(char **str)
 {
 	int		i;
@@ -142,4 +164,4 @@ char	*validate_quot_marks_for_export(char *str)
 	}
 	str2[j] = '\0';
 	return (str2);
-}
+}*/

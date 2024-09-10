@@ -6,7 +6,7 @@
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 00:19:11 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/07/30 15:53:20 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:33:29 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int					my_putstr(char *s);
 void				my_putstr_fd(char *s, int fd);
 char				**my_split(char const *s, char c);
 void				my_clean_vect(char **vect);
+int					my_str_end_cmp(const char *s1, const char *s2);
 char				*my_strchr(const char *s, int c);
 int					my_strcmp(const char *s1, const char *s2);
 char				*my_strdup(const char *s);
@@ -53,6 +54,7 @@ void				my_striteri(char *s, void (*f)(unsigned int, char *));
 char				*my_strjoin(char const *s1, char const *s2);
 size_t				my_strlcat(char *dst, const char *src, size_t size);
 size_t				my_strlcpy(char *dst, const char *src, size_t size);
+char				*my_strldup(const char *s, int i);
 size_t				my_strlen(const char *s);
 char				*my_strmapi(char const *s, char (*f)(unsigned int, char));
 int					my_strncmp(const char *s1, const char *s2, size_t n);
@@ -72,6 +74,7 @@ char				*gnl_ft_substr(char const *s, unsigned int start, \
 			size_t len);
 char				*get_next_line(int fd);
 char				*my_strcdup(const char *s, char c);
+char				*fromstrldup(const char *s, int i);
 char				*fromstrcdup(const char *s, char c);
 void				print_matrix(char **matrix);
 int					is_there_space(char *str);

@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 00:41:47 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/27 21:32:51 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/10 16:01:03 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,43 +28,48 @@ int	main(int argc, char *argv[])
 	get_env(&command);
 	while (42)
 	{
+		printf("g_status = %i\n", g_status);
 		set_command(&command);
 		if (command.input == NULL)
 		{
 			clear_input(&command);
-			break;
+			break ;
 		}
-		if (my_strlen(command.input) == 0)
+		else if (my_strlen(command.input) == 0)
 		{
-			clear_loop_end(&command);
-			continue;
+			clear_input(&command);
+			continue ;
 		}
 		add_history(command.input);
-		input_parser(&command);
-		lexer(&command);
-		if (run_commands(&command) == CLOSE)
+		if (first_input_validation(&command) == ERROR)
+		{
+			clear_input(&command);
+			continue ;
+		}
+		parser(&command);
+//		lexer(&command);
+//		printf("Printar lista do input:\n");
+//		printlist(command.l_input);
+		var_exp(&command);
+/*		if (run_commands(&command) == CLOSE)
 		{
 			clear_loop_end(&command);
 			break ;
-		}
+		}*/
 		clear_loop_end(&command);
 	}
 	final_clear(&command);
 }
-
-/*int		is_space(char c)
-{
-	return (c == ' ');
-}
-
-
-int		is_all_whitespace(const char *str)
-{
-	while (*str)
-	{
-		if (is_space(*str) == FALSE)
-			return (FALSE);
-		str++;
-	}
-	return (TRUE);
-}*/
+/*
+**com a my_env eu consigo fazer 3 built-ins: env (FEITA); export (cria uma nova variável de ambiente ou
+altera uma que já existe) e unset (FEITA) (se ela conseguir achar a variável de ambiente, ela exclui essa
+variável. Se não achar, não faz nada).
+export = verifica se já existe. Se existe, modifica. Se não, cria uma nova.
+ATENÇÃO PRO "VERIFICA DE EXISTE"!!! -> retorno de erro OU da posição!
+Isso tb vai ser importante, depois, para a expansão de variáveis... "echo $USER", por exemplo, é
+expansão de variável
+Se conseguir modularizar a busca de uma variável de ambiente, a busca de erros, vai facilitar,
+depois, na unset, na export e na expansão de variáveis (ver foto de echo c $User que não existe);
+na régua de avaliação, se tiver $$ vai imprimir apenas um $, por mais q o bash coloque o pid
+echo $? está pedindo p imprimir na tela o último erro (deu certo ou deu erra) -- ver foto de echo $?
+*/

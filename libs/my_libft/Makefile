@@ -31,6 +31,7 @@ my_putstr.c \
 my_putstr_fd.c \
 my_split.c \
 my_clean_vect.c \
+my_str_end_cmp.c \
 my_strchr.c \
 my_strcmp.c \
 my_strdup.c \
@@ -38,6 +39,7 @@ my_striteri.c \
 my_strjoin.c \
 my_strlcat.c \
 my_strlcpy.c \
+my_strldup.c \
 my_strlen.c \
 my_strmapi.c \
 my_strncmp.c \
@@ -51,6 +53,7 @@ get_next_line.c \
 get_next_line_utils.c \
 my_strcdup.c \
 fromstrcdup.c \
+fromstrldup.c \
 my_print_matrix.c \
 is_there_space.c \
 is_closed_by_quot_marks.c
