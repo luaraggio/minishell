@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_exp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
+/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:25:31 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/10 15:18:38 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:45:05 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	var_exp(t_command *command)
 		search_dollar(node->token, command->my_env);
 		node = node->next;
 	}
-	printf("Lista do input:\n");
-	printlist(command->l_input);
+	//printf("Lista do input:\n");
+	//printlist(command->l_input);
 }
 
 void	search_dollar(t_tokens *node_token, t_env *env)

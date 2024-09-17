@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pipe.c                                        :+:      :+:    :+:   */
+/*   pipe_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:06:43 by lraggio           #+#    #+#             */
-/*   Updated: 2024/08/26 02:04:31 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 11:25:12 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int     pipe_execution(t_command *command, t_node *list)
+int     pipe_execution(t_command *command, t_node *node)
 {
+    extern volatile unsigned int	g_status;
+    int     exit_status;
     int     pipe_fd[2];
     int     pid_1;
     int     pid_2;
 
+    exit_status = (int) g_status;
     if (pipe(pipe_fd) == -1)
         return (perror(strerror(errno)), ERROR);
     pid_1 = fork();
@@ -32,7 +35,7 @@ int     pipe_execution(t_command *command, t_node *list)
             exit(ERROR);
         }
         close(pipe_fd[1]);
-        run_execve(command, list);
+        run_commands(command, node);
         exit(EXIT_SUCCESS);
     }
     pid_2 = fork();
@@ -48,12 +51,17 @@ int     pipe_execution(t_command *command, t_node *list)
             exit(ERROR);
         }
         close(pipe_fd[0]);
-        run_execve(command, list->next->next);
+        run_commands(command, node);
         exit(EXIT_SUCCESS);
     }
-    close(pipe_fd[0]);
-    close(pipe_fd[1]);
-    waitpid(pid_1, NULL, 0);
-    waitpid(pid_2, NULL, 0);
+    close_fds(pipe_fd[0], pipe_fd[1]);
+    waitpid(pid_1, &exit_status, 0);
+    waitpid(pid_2, &exit_status, 0);
     return (NO_ERROR);
+}
+
+void    close_fds(int fd_1, int fd_2)
+{
+    close(fd_1);
+    close(fd_2);
 }

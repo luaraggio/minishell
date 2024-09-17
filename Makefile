@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+         #
+#    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/09/10 16:39:25 by lpaixao-         ###   ########.fr        #
+#    Updated: 2024/09/13 23:17:22 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,13 @@ srcs//variable_expansion/var_exp_utils.c \
 srcs/builtints/builtins.c \
 srcs/builtints/pwd.c \
 srcs/parser/linked_list_input/create_list_input.c \
-srcs/signals/signal_handle.c
+srcs/signals/signal_handle.c \
+srcs/exec/init_execve.c \
+srcs/exec/execve_utils.c \
+srcs/exec/clean_execve.c \
+srcs/exec/run_execve.c \
+srcs/exec/pipe_execution.c \
+srcs/exec/executor.c
 
 OBJS = ${SRCS:.c=.o}
 
