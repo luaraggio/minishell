@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:07:06 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 12:34:44 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:06:57 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char     *get_path_var(t_command *command)
     if (!get_path)
     {
         g_status = 127;
-        return (my_putstr_fd("PATH variable is unset\n",
-        STDERR_FILENO), ERROR);
+        my_putstr_fd("PATH variable is unset\n", 2);
+        return (NULL);
     }
     path = get_path->value;
     return (path);
@@ -41,8 +41,9 @@ char    *get_absolute_path(t_command *command, t_node *node)
     path = get_path_var(command);
     if (!path)
     {
-        return (my_putstr_fd("PATH variable is incorrectly set\n",
-        STDERR_FILENO), g_status = 127, ERROR);
+        g_status = 127;
+        my_putstr_fd("PATH variable is incorrectly set\n", STDERR_FILENO);
+        return (NULL);
     }
     dir = my_split(path, ':');
     if (!dir)
@@ -56,7 +57,8 @@ char    *get_absolute_path(t_command *command, t_node *node)
         free(absolute_path);
         i++;
     }
-    return (free_matrix(dir), g_status = 127, ERROR);
+    g_status = 127;
+    return (free_matrix(dir), NULL);
 }
 
 char    **cmd_list_to_array(t_node *sentences)
