@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/17 18:23:24 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 16:53:53 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,132 +136,149 @@ typedef struct s_command
 	t_env	*my_env;
 }	t_command;
 
-char	*make_prompt(void);
-void	get_env(t_command *command);
-t_env	*create_first_env_node(char *c, t_env *list);
-t_env	*create_last_env_node(char  *c, t_env *temp);
-void	set_command(t_command *command);
-void	print_env(t_env *list, int fd);
-void	change_invalid_metachars(t_command *command);
-int		is_metachar(char c);
-void	malloc_str_of_invalid_metas(t_command *command);
-char	*check_invalid_successive_metachars(char *input);
-void	add_meta_to_metastring(t_command *command, int i);
-char	*remove_spaces_around_metachars(char *s);
-void	remove_spaces_after_metachars(char *s, char *str);
-void	remove_spaces_before_metachars(char *s, char *str, int final_size);
-char	**meta_split(char const *s);
-int		strlen_without_spaces_post_metachars(char *s);
-int		strlen_without_spaces_before_metachars(char *s);
-char	**return_invalid_metas(t_command *command, char **matrix);
-void	return_added_unprinted_chars(char *s, char *metas);
-t_env	*my_getenv_by_list(const char *name, t_env *my_env);
-void	make_list_from_input(t_command *command);
-t_node	*create_first_input_node(char *s, t_node *list);
-t_node	*create_last_input_node(char *s, t_node *prev);
-void	pre_exec(t_command   *command);
-char    **tokenize_sentence(char *input);
 
-// parser
+//------------------MAIN------------------
+//main.c
+int		main(int argc, char *argv[]);
+//prompt_and_inputs.c
+void	set_command(t_command *command);
+char	*make_prompt(void);
+//pre_exec.c
+void	pre_exec(t_command   *command);
+
+//------------------PARSER------------------
+//parser.c
 int		parser(t_command *command);
 char	**split_sentence_by_char(char *input, char c);
+char	**tokenize_sentence(char *input);
+//tokenize_words.c
+void	search_tokens(t_node *input);
+void    set_token(t_tokens *token, int command, int count);
 int		is_builtin(char *s);
-//char	**split_sentences(char *input);
+//LINKED_LIST_INPUT
+//create_list_input.c
+t_tokens	*make_list_tokens(char *s, t_node *list);
+void	make_list_from_input(t_command *command);
+void	free_sentences(char **sentences);
+void	free_tokens(t_tokens *token);
 
-// is?
+//------------------ERROR_HANDLE------------------
+//input_validation.c
+int		first_input_validation(t_command *command);
+int		general_input_validation(t_node *node);
+//pipe_validation.c
+int		check_pipe_init_and_end(char *str);
+int		check_double_pipe_together(char **str);
+int		check_following_pipes(char *str);
+char	*remove_after_double_pipe(char **str, int i);
+//print_error.c
+void	print_error(char *str);
+//quote_validation.c
+int		n_quote_validation(char *str);
+int		dollar_is_closed_by_single_quote(char **str);
+//remove_quotes.c
+void	remove_all_quotes(t_node *list, int quote);
+void	remove_quote(char **str, int i, enum e_ascii quote);
+
+//----------------GENERAL_FUNCTIONS------------------
+//is_chars_functions.c
 int		is_pipe(char c);
 int 	is_simple_quote(char c);
 int 	is_double_quote(char c);
 int		is_append(char *s);
+int		is_valid_exp_char(char c);
+int		is_char(char o, char c);
+//is_chars_functions_2.c
 int		is_redir_out(char *s);
 int		is_redir_in(char *s);
 int		is_heredoc(char *s);
-int		is_file(t_node *node, t_node *list);
 int		is_redirect(char *str);
-int		is_valid_exp_char(char c);
-int		is_valid_ev(char *str);
-int		is_char(char o, char c);
-//int		is_char(char *s, char c);
 
-// list
-void	remove_env(t_env *node, t_env *start);
-t_tokens    *make_list_tokens(char *s, t_node *list);
-void    create_first_input_token(char *word, t_tokens *list);
-t_tokens    *create_last_token(char *word, t_tokens *prev);
-//void	change_env_value(t_env *node, char *str);
-//void	create_new_ev(char *str, t_env *env_list);
-
-// error
-int		first_input_validation(t_command *command);
-int		n_quote_validation(char *str);
-int		dollar_is_closed_by_single_quote(char **str);
-void	remove_quote(char **str, int i, enum e_ascii quote);
-void	print_error(char *str);
-void	remove_all_quotes(t_node *list, int quote);
-int		check_pipe_init_and_end(char *str);
-int		general_input_validation(t_node *node);
-int		validate_words(char *str);
-int		check_double_pipe_together(char **str);
-int		check_following_pipes(char *str);
-
-// parser
-void	search_tokens(t_node *input);
-void    set_token(t_tokens *token, int command, int count);
-int		is_builtin(char *s);
-
-// Built In
-int		run_builtin(t_command *command, t_tokens *token, t_env *env, int fd);
-int		pwd(void);
-void    my_export(t_env *env, t_tokens *node_t, int fd);
-void	print_env_for_export(t_env *list, int fd);
-void    my_unset(t_env *env, t_tokens *node_i);
-int		check_export_error(char **str);
-char	*validate_quot_marks_for_export(char *str);
-int		is_valid_ev(char *str);
-void	change_env_value(t_env *env, char *str);
-void	create_new_ev(char *str, t_env *env);
-int		my_cd(t_tokens *node, t_env *env);
-int		my_echo(t_tokens *node, int fd);
-int		my_exit(t_tokens *token, t_command *command);
-
-// Execution
-void	free_matrix(char **matrix);
-void	execve_clean(char *path, char **env_array);
-void	close_fds(int fd_1, int fd_2);
-char	**envp_list_to_array(t_env *env_list);
-char	**cmd_list_to_array(t_node *sentences);
-char	*get_executable_path(t_command *command, t_node *list);
-int		executor(t_command *command, t_node *sentence);
-int		run_commands(t_command *command, t_node *node);
-int		run_execve(t_command *command, t_node *list);
-int		pipe_execution(t_command *command, t_node *node);
-int		env_list_size(t_env *list);
-int		count_tokens_in_node(t_node *sentence);
-
-// Clear
-void	clear_input(t_command *command);
-void    final_clear(t_command *command);
-void	free_list(t_node *list);
-void	clear_loop_end(t_command *command);
-void	free_env(t_env *list);
-void	free_sentences(char **sentences);
-void	free_tokens(t_tokens *token);
-
-// signals
+//---------------------SIGNALS---------------------
+//signal_handle.c
 void	signal_handle(int sig);
 void	setup_signal_handling(void);
 void	handle_sig_error(int sig);
 
-// variable expansion
+//-----------------LINKED_LIST---------------------
+//change_list.c
+void	remove_env(t_env *node, t_env *start);
+//list_functions.c
+void	create_first_input_token(char *word, t_tokens *list);
+t_env	*create_first_env_node(char *c, t_env *list);
+t_env	*create_last_env_node(char  *c, t_env *temp);
+t_node	*create_first_input_node(char *s, t_node *list);
+t_node	*create_last_input_node(char *s, t_node *prev);
+t_tokens	*create_last_token(char *word, t_tokens *prev);
+//                  Teste:
+void	printlist(t_node *list);
+
+//-----------------VARIABLE_EXPANSION---------------------
+//var_exp.c
 void	var_exp(t_command *command);
 void	search_dollar(t_tokens *node_token, t_env *env);
 int		check_post_dollar(t_tokens *token, char *str, int j, t_env *env);
+//var_exp_utils.c
 int		print_global_var(t_tokens *token, char *str, int j);
 int		double_dollar(t_tokens *token, char *str, int j);
 int		expand_variable(t_tokens *token, t_env *env, char *str, int j);
 char	*join_strs(char *str, char *middle, int j, int jump, int *index);
 
-// Teste:
+//---------------------------ENV-----------------------
+//env_utils.c
+void	get_env(t_command *command);
+t_env	*my_getenv_by_list(const char *name, t_env *my_env);
 
-void	printlist(t_node *list);
+//---------------------EXEC-----------------------
+//clean_execve.c
+void	execve_clean(char *path, char **env_array);
+void	free_matrix(char **matrix);
+//executor.c
+int		executor(t_command *command, t_node *sentence);
+int		run_commands(t_command *command, t_node *node);
+//execve_utils.c
+int		env_list_size(t_env *list);
+int		count_tokens_in_node(t_node *sentence);
+//init_execve.c
+char	**envp_list_to_array(t_env *env_list);
+char	**cmd_list_to_array(t_node *sentences);
+char	*get_executable_path(t_command *command, t_node *list);
+//pipe_execution.c
+int		pipe_execution(t_command *command, t_node *node);
+//run_execve.c
+int		run_execve(t_command *command, t_node *list);
+//fd.c
+void	close_fds(int fd_1, int fd_2);
+//redirect.c
+
+//------------------------BUILTINS-----------------------
+//builtins.c
+int		run_builtin(t_command *command, t_tokens *token, t_env *env, int fd);
+//cd.c
+int		my_cd(t_tokens *node, t_env *env);
+//echo.c
+int		my_echo(t_tokens *node, int fd);
+//exit.c
+int		my_exit(t_tokens *token, t_command *command);
+//pwd.c
+int		pwd(void);
+//ENV
+//env_bt_utils.c
+void	print_env_for_export(t_env *list, int fd);
+void	change_env_value(t_env *env, char *str);
+void	create_new_ev(char *str, t_env *env);
+int		is_valid_ev(char *str);
+//env_builtins.c
+void	print_env(t_env *list, int fd);
+void	my_export(t_env *env, t_tokens *node_t, int fd);
+void	my_unset(t_env *env, t_tokens *node_i);
+
+//------------------------CLEANING-----------------------
+//clear_funct.c
+void	clear_loop_end(t_command *command);
+void	clear_input(t_command *command);
+void	final_clear(t_command *command);
+void	free_list(t_node *list);
+void	free_env(t_env *list);
+
 #endif

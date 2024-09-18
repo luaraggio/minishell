@@ -6,7 +6,7 @@
 #    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/09/18 15:10:12 by lraggio          ###   ########.fr        #
+#    Updated: 2024/09/18 16:25:08 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,14 +62,8 @@ srcs/error_handle/quote_validation.c \
 srcs/error_handle/remove_quotes.c \
 srcs/error_handle/pipe_validation.c \
 srcs/parser/parser.c \
-srcs/parser/quot_marks_validation/parser_quotation_marks_validation.c \
-srcs/parser/quot_marks_validation/str_of_invalid_metas.c \
-srcs/parser/spaces_around_metas/spaces_around_metas_validation.c \
-srcs/parser/spaces_around_metas/strlen_spaces_around_metas.c \
-srcs/parser/meta_split.c \
-srcs/parser/tokenize_sentence/tokenize_sentence.c \
+srcs/parser/tokenize_sentence.c \
 srcs/parser/tokenize_words.c \
-srcs/general_functions/metacharacters_utils.c \
 srcs/general_functions/is_chars_functions.c \
 srcs/general_functions/is_chars_functions_2.c \
 srcs/main/prompt_and_inputs.c \

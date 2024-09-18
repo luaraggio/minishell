@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:06:43 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/18 15:06:21 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 15:53:41 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 Função p/ percorrer node e organizar os fds
 
+void    clean_pipe(t_node *node)
+{
+    free_list(node);
+}
 */
 
 int     pipe_execution(t_command *command, t_node *node)
@@ -37,6 +41,7 @@ int     pipe_execution(t_command *command, t_node *node)
         close(pipe_fd[0]);
         if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
         {
+
             perror("dup2 (stdout)");
             exit(ERROR);
         }
