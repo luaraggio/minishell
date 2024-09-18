@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_execve.c                                     :+:      :+:    :+:   */
+/*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 16:17:35 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 18:11:16 by lraggio          ###   ########.fr       */
+/*   Created: 2024/09/17 18:45:47 by lraggio           #+#    #+#             */
+/*   Updated: 2024/09/18 15:09:02 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
-
-void    free_matrix(char **matrix)
+/*
+void    configure_fds()
 {
-    int     i;
 
-    i = 0;
-    if (!matrix)
-        return ;
-    while (matrix[i])
-    {
-        free(matrix[i]);
-        i++;
-    }
-    free(matrix);
 }
+*/
 
-void    execve_clean(char *path, char **env_array)
+void    close_fds(int fd_1, int fd_2)
 {
-    free(path);
-    free(env_array);
+    close(fd_1);
+    close(fd_2);
 }

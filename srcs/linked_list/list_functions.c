@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:17:58 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/13 17:33:54 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 00:04:50 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_node	*create_first_input_node(char *s, t_node *list)
 	list = (t_node *)malloc(sizeof(t_node));
 	if (list == NULL)
 		return (NULL);
-	make_list_tokens(s, list);
+	make_list_tokens(s, list);	
 	list->fd_in = 0;
 	list->fd_out = 1;
 	list->pid = NO_INFO;
@@ -54,7 +54,7 @@ t_node	*create_last_input_node(char *s, t_node *prev)
 	new = (t_node *)malloc(sizeof(t_node));
 	if (!new)
 		return (NULL);
-	make_list_tokens(s, new);
+	make_list_tokens(s, new); 
 	new->fd_in = 0;
 	new->fd_out = 1;
 	new->pid = NO_INFO;
@@ -66,7 +66,10 @@ t_node	*create_last_input_node(char *s, t_node *prev)
 
 void	create_first_input_token(char *word, t_tokens *list)
 {
-	list->word = my_strdup(word);
+	if (!word)
+		list->word = NULL;
+	else
+		list->word = my_strdup(word);
 	list->type = NO_INFO;
 	list->next = NULL;
 }
@@ -87,7 +90,7 @@ t_tokens	*create_last_token(char *word, t_tokens *prev)
 
 // As próximas 2 funções são para testes durante a elaboração do código:
 
-/*static void	print_tokens(t_tokens *token)
+static void	print_tokens(t_tokens *token)
 {
 	t_tokens	*temp;
 	int			i = 0;
@@ -95,6 +98,11 @@ t_tokens	*create_last_token(char *word, t_tokens *prev)
 	temp = token;
 	while (temp)
 	{
+		if (token->word == NULL)
+		{
+			temp = temp->next;
+			continue ;
+		}
 		printf("Word: %s\n", temp->word);
 		i = 0;
 		while (temp->word[i])
@@ -135,4 +143,3 @@ void	printlist(t_node *list)
 		temp = temp->next;
 	}
 }
-*/

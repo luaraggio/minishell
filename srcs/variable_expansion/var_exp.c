@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_exp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:25:31 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/17 11:45:05 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 00:07:51 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	var_exp(t_command *command)
 		search_dollar(node->token, command->my_env);
 		node = node->next;
 	}
-	//printf("Lista do input:\n");
-	//printlist(command->l_input);
+//	printf("Lista do input:\n");
+//	printlist(command->l_input);
 }
 
 void	search_dollar(t_tokens *node_token, t_env *env)
@@ -41,10 +41,20 @@ void	search_dollar(t_tokens *node_token, t_env *env)
 	while (token)
 	{
 		i = 0;
+		if (token->word == NULL)
+		{
+			token = token->next;
+			continue ;
+		}
 		while (token->word[i])
 		{
 			if (token->word[i] == DOLLAR)
-				check_post_dollar(token, token->word, i, env);
+			{
+				if (dollar_is_closed_by_single_quote(&(token->word)) == TRUE)
+					i++;
+				else
+					check_post_dollar(token, token->word, i, env);
+			}
 			else
 				i++;
 		}

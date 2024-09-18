@@ -6,16 +6,16 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:43:07 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 12:08:16 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/03 16:13:41 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+extern volatile unsigned int	g_status;
 
 void	signal_handle(int sig)
 {
-	extern volatile unsigned int	g_status;
 	if (sig == SIGINT) // ctrl + c
 	{
 		printf("\n");

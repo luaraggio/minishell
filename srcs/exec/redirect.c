@@ -1,34 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_execve.c                                     :+:      :+:    :+:   */
+/*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 16:17:35 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 18:11:16 by lraggio          ###   ########.fr       */
+/*   Created: 2024/09/17 18:39:17 by lraggio           #+#    #+#             */
+/*   Updated: 2024/09/17 18:39:18 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
-
-void    free_matrix(char **matrix)
-{
-    int     i;
-
-    i = 0;
-    if (!matrix)
-        return ;
-    while (matrix[i])
-    {
-        free(matrix[i]);
-        i++;
-    }
-    free(matrix);
-}
-
-void    execve_clean(char *path, char **env_array)
-{
-    free(path);
-    free(env_array);
-}

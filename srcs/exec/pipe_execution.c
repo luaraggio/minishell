@@ -6,11 +6,17 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:06:43 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 11:25:12 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 15:06:21 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+/*
+
+Função p/ percorrer node e organizar os fds
+
+*/
 
 int     pipe_execution(t_command *command, t_node *node)
 {
@@ -58,10 +64,4 @@ int     pipe_execution(t_command *command, t_node *node)
     waitpid(pid_1, &exit_status, 0);
     waitpid(pid_2, &exit_status, 0);
     return (NO_ERROR);
-}
-
-void    close_fds(int fd_1, int fd_2)
-{
-    close(fd_1);
-    close(fd_2);
 }

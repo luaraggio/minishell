@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:46:24 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/13 23:17:47 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 18:23:18 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,3 @@ int     count_tokens_in_node(t_node *sentence)
     }
     return (i);
 }
-
-/*void	print_env_array(char **envp)
-{
-    int     i;
-
-    i = 0;
-    while (envp[i])
-    {
-        printf("%s\n", envp[i]);
-        i++;
-    }
-}*/

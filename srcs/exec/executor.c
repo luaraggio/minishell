@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:27:09 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 11:19:32 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 18:10:44 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,9 @@ int	run_commands(t_command *command, t_node *node) //Luara: separa em execve e b
 	t_tokens	*current_token;
 
 	current_token = node->token;
-	if (current_token->type == BUILTIN)
-	{
-		//Luara: Fazer um pré-builtins para transformar builtins de matriz p/ lista linkada percorendo t_node!!
-		/*Letícia: return (run_builtin(node->token, command->my_env, 1)); -> a função está enviando fd 1 por padrão e
-				deverá ser ajustado isso posteriormente para enviar um fd específico*/
-		return(printf("Achei um builtin!\n"), NO_ERROR);
-	}
+	if (current_token->type == BUILTIN) // Let: a função está enviando fd 1 por padrão. deverá ser ajustado isso posteriormente para enviar um fd específico
+		return (run_builtin(command, node->token, command->my_env, 1), NO_ERROR);
 	else
-		return (run_execve(command, node));
-	//return(printf("Não um builtin!\n"), NO_ERROR);
-	return (NO_ERROR);
+		return (run_execve(command, node), NO_ERROR);
+	return (ERROR);
 }

@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_print_matrix.c                                  :+:      :+:    :+:   */
+/*   pre_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 23:30:38 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/14 14:02:07 by lpaixao-         ###   ########.fr       */
+/*   Created: 2024/09/15 17:15:28 by lpaixao-          #+#    #+#             */
+/*   Updated: 2024/09/15 17:17:17 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-void	print_matrix(char **matrix)
+void	pre_exec(t_command   *command)
 {
-	int	i = 0;
-
-	while (matrix[i])
-	{
-		my_printf("Str[%i] da matriz: %s\n", i, matrix[i]);
-		i++;
-	}
+	remove_all_quotes(command->l_input, DOUBLE_QUOT_MARK);
+	var_exp(command);
+	remove_all_quotes(command->l_input, SIMPLE_QUOT_MARK);
 }

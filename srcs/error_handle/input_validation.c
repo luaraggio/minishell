@@ -6,69 +6,56 @@
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:58:44 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/10 19:34:05 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:47:25 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static int  check_pipe(char *str);
-//static int	check_pipe_and_redir(char *str);
-
 int	first_input_validation(t_command *command)
 {
-	if (check_pipe(command->input) == ERROR)
+	if (!(command->input))
 		return (ERROR);
-/*	else if (check_pipe_and_redir(command->input) == ERROR)
-		return (ERROR);*/
+	if (n_quote_validation(command->input) == ERROR)
+		return (ERROR);
+	else if (check_pipe_init_and_end(command->input) == ERROR)
+		return (ERROR);
+	else if (check_following_pipes(command->input) == ERROR)
+		return (ERROR);
+	else if (check_double_pipe_together(&(command->input)) == ERROR) // Testar p ver a ordem qesse e os anteriores de pipes seguidos mas  c espaços tem q ficar
+		return (NO_ERROR);
 	return (NO_ERROR);
 }
 
-/*
-The following function checks if the string starts or ends with a Pipe, or if
-there are two consecutive Pipes, such as ||.
-*/
-
-static int	check_pipe(char *str)
+int	general_input_validation(t_node *node)
 {
-	int	i;
+	t_node		*temp;
+	t_tokens	*token;
 
-	i = 0;
-	if (str[i] == PIPE)
+	temp = node;
+	while (temp)
 	{
-		printf("bash: syntax error near unexpected token `|'\n");
-		return (ERROR);
-	}
-	while (str[i])
-	{
-		if (str[i] == PIPE && str[i + 1] == PIPE)
+		token = temp->token;
+		while (token)
 		{
-			printf("bash: syntax error near unexpected token `||'\n");
-			return (ERROR);
+			if (token->word == NULL || token->word[0] == DOUBLE_QUOT_MARK || token->word[0] == SIMPLE_QUOT_MARK)
+			{
+				token = token->next;
+				continue ;
+			}
+			/*if (validate_words(token->word) == ERROR)
+				return (ERROR);*/
+			token = token->next;
 		}
-		i++;
-	}
-	if (str[i - 1] == PIPE)
-	{
-		printf("bash: syntax error near unexpected token `|'\n");
-		return (ERROR);
+		temp = temp->next;
 	}
 	return (NO_ERROR);
 }
-
 /*
-The following function checks if there are pipes and redirects put together
-*/
-/*
-static int	check_pipe_and_redir(char *str)
+int	validate_words(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i]) 
-		i++;
-	}
+	void(str);
+	if (check_double_pipe(str) == ERROR)
+		return (ERROR);
 	return (NO_ERROR);
 }*/

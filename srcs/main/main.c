@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 00:41:47 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/17 11:45:30 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 17:40:51 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ void	ms_loop(t_command command)
 			continue ;
 		}
 		add_history(command.input);
-		if (first_input_validation(&command) == ERROR)
-		{
-			clear_input(&command);
+		if (parser(&command) == ERROR)
 			continue ;
-		}
-		parser(&command);
-		//var_exp(&command);
+//		printf("Printar lista do input:\n");
+//		printlist(command.l_input);
+		pre_exec(&command);
 		if (executor(&command, command.l_input) == CLOSE)
 		{
 			clear_loop_end(&command);
@@ -54,7 +52,7 @@ int	main(int argc, char *argv[])
 	my_bzero(&command, sizeof(t_command));
 	if (argc > 1)
 	{
-		my_printf("bash: %s: No such file or directory\n", argv[1]);
+		my_printf("bash: %s: No such file or directory\n", argv[1]); // Colocar no FD = 2
 		return 0;
 	}
 	setup_signal_handling();

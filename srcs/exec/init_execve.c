@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:07:06 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 15:06:57 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/17 18:32:20 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,19 @@
 
 extern volatile unsigned int	g_status;
 
-char     *get_path_var(t_command *command)
+char    *get_executable_path(t_command *command, t_node *node)
 {
     t_env   *get_path;
-    char    *path;
-
-    get_path = my_getenv_by_list("PATH", command->my_env);
-    if (!get_path)
-    {
-        g_status = 127;
-        my_putstr_fd("PATH variable is unset\n", 2);
-        return (NULL);
-    }
-    path = get_path->value;
-    return (path);
-}
-
-char    *get_absolute_path(t_command *command, t_node *node)
-{
     char    *path;
     char    **dir;
     char    *absolute_path;
     int     i;
 
     i = 0;
-    path = get_path_var(command);
-    if (!path)
-    {
-        g_status = 127;
-        my_putstr_fd("PATH variable is incorrectly set\n", STDERR_FILENO);
-        return (NULL);
-    }
+    get_path = my_getenv_by_list("PATH", command->my_env);
+    path = get_path->value;
+    if (!path || !get_path->value)
+        return (print_error("PATH variable is unset or incorrectly set\n"), g_status = 127, NULL);
     dir = my_split(path, ':');
     if (!dir)
         return (NULL);
@@ -57,8 +39,7 @@ char    *get_absolute_path(t_command *command, t_node *node)
         free(absolute_path);
         i++;
     }
-    g_status = 127;
-    return (free_matrix(dir), NULL);
+    return (print_error("Command not found\n"), g_status = 127, free_matrix(dir), NULL);
 }
 
 char    **cmd_list_to_array(t_node *sentences)
@@ -114,16 +95,4 @@ char    **envp_list_to_array(t_env *env_list)
     }
     array[i] = NULL;
     return (array);
-}
-
-int     execve_args(char *path, t_node *list, char **env_array)
-{
-    if (!path)
-        return (printf("bash: %s: command not found\n", list->token->word),
-        g_status = 127, ERROR);
-    if (!list || !list->token)
-        return (perror("Erro na lista de comandos"), ERROR);
-    if (!env_array)
-        return (perror("Erro ao converter lista de ambiente para array"), ERROR);
-    return (NO_ERROR);
 }

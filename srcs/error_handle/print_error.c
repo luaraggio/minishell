@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_print_matrix.c                                  :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 23:30:38 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/08/14 14:02:07 by lpaixao-         ###   ########.fr       */
+/*   Created: 2024/09/14 16:43:21 by lpaixao-          #+#    #+#             */
+/*   Updated: 2024/09/14 17:03:47 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-void	print_matrix(char **matrix)
+void	print_error(char *str)
 {
-	int	i = 0;
-
-	while (matrix[i])
-	{
-		my_printf("Str[%i] da matriz: %s\n", i, matrix[i]);
-		i++;
-	}
+	my_putstr_fd(str, 2);
 }

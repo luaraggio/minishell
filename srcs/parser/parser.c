@@ -3,27 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:41:24 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/13 16:56:32 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/16 23:42:14 by lpaixao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	parser(t_command *command)
+int	parser(t_command *command)
 {
-	// VAlIDAR PIPES DUPLOS!
-	// Validar aspas ímpares, menos aspas qe estejam dentro de outra, como em "oie'"
+	if (first_input_validation(command) == ERROR)
+	{
+		clear_input(command);
+		return (ERROR);
+	}
 	command->input_matrix = split_sentence_by_char(command->input, '|');
-//	my_printf("Matriz pós split:\n");
-//	print_matrix(command->input_matrix);
+	my_printf("Matriz pós split:\n");
+	print_matrix(command->input_matrix);
 	make_list_from_input(command);
 	my_clean_vect(command->input_matrix);
 	search_tokens(command->l_input);
-	//Imprimir a lista para teste
-//	printlist(command->l_input);
+	if (general_input_validation(command->l_input) == ERROR)
+	{
+		clear_loop_end(command);
+		return (ERROR);
+	}
+//Imprimir a lista para teste
+	printlist(command->l_input);
+	return (NO_ERROR);
 }
 
 char    **split_sentence_by_char(char *input, char c)

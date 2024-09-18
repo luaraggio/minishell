@@ -6,7 +6,7 @@
 #    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/09/13 23:17:22 by lraggio          ###   ########.fr        #
+#    Updated: 2024/09/18 15:10:12 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,10 @@ srcs/builtints/cd.c \
 srcs/builtints/echo.c \
 srcs/builtints/exit.c \
 srcs/error_handle/input_validation.c \
+srcs/error_handle/print_error.c \
+srcs/error_handle/quote_validation.c \
+srcs/error_handle/remove_quotes.c \
+srcs/error_handle/pipe_validation.c \
 srcs/parser/parser.c \
 srcs/parser/quot_marks_validation/parser_quotation_marks_validation.c \
 srcs/parser/quot_marks_validation/str_of_invalid_metas.c \
@@ -65,11 +69,11 @@ srcs/parser/spaces_around_metas/strlen_spaces_around_metas.c \
 srcs/parser/meta_split.c \
 srcs/parser/tokenize_sentence/tokenize_sentence.c \
 srcs/parser/tokenize_words.c \
-srcs/lexer/lexer.c \
 srcs/general_functions/metacharacters_utils.c \
 srcs/general_functions/is_chars_functions.c \
 srcs/general_functions/is_chars_functions_2.c \
 srcs/main/prompt_and_inputs.c \
+srcs/main/pre_exec.c \
 srcs//variable_expansion/var_exp.c \
 srcs//variable_expansion/var_exp_utils.c \
 srcs/builtints/builtins.c \
@@ -81,7 +85,8 @@ srcs/exec/execve_utils.c \
 srcs/exec/clean_execve.c \
 srcs/exec/run_execve.c \
 srcs/exec/pipe_execution.c \
-srcs/exec/executor.c
+srcs/exec/executor.c \
+srcs/exec/fd.c
 
 OBJS = ${SRCS:.c=.o}
 
