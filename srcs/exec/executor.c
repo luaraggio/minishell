@@ -22,9 +22,9 @@ int	executor(t_command *command, t_node *sentence)
 	while (current_node)
 	{
 		//Redirect entra aqui!
-		if (current_node->next)
+/*		if (current_node->next)
 			ret = pipe_execution(command, current_node);
-		else
+		else */
 			ret = run_commands(command, current_node);
 		current_node = current_node->next;
 	}
@@ -39,6 +39,7 @@ int	run_commands(t_command *command, t_node *node) //Luara: separa em execve e b
 	if (current_token->type == BUILTIN) // Let: a função está enviando fd 1 por padrão. deverá ser ajustado isso posteriormente para enviar um fd específico
 		return (run_builtin(command, node->token, command->my_env, 1), NO_ERROR);
 	else
-		return (run_execve(command, node), NO_ERROR);
+	        printf("Vai rodar execve\n");
+//		return (run_execve(command, node), NO_ERROR);
 	return (ERROR);
 }

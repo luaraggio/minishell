@@ -32,8 +32,8 @@ int    run_execve(t_command *command, t_node *list)
     {
         pid = list->pid;
         if (execve(path, args, env_array) == -1)
-            return (execve_clean(path, env_array), free_matrix(args), g_status = 127, ERROR);
+        	return (execve_clean(path, env_array, command), free_matrix(args), g_status = 127, ERROR);
     }
     waitpid(list->pid, &exit_status, 0);
-    return (execve_clean(path, env_array), free_matrix(args), NO_ERROR);
+    return (execve_clean(path, env_array, command), free_matrix(args), NO_ERROR);
 }
