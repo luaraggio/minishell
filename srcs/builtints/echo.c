@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpaixao- <lpaixao-@student.42.rio>         +#+  +:+       +#+        */
+/*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:31:08 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/14 23:36:43 by lpaixao-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/minishell.h"
 
 int	my_echo(t_tokens *node, int fd)
 {

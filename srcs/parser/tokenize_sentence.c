@@ -6,11 +6,11 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:50:49 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/18 16:15:44 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/minishell.h"
 
 char    **tokenize_sentence(char *input)
 {

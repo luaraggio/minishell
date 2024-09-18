@@ -6,11 +6,11 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:17:35 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/17 18:11:16 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/minishell.h"
 
 void    free_matrix(char **matrix)
 {

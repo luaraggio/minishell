@@ -6,11 +6,11 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:02:36 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/17 17:30:05 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/minishell.h"
 
 void	set_command(t_command *command)
 {
