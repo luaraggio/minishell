@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:27:09 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/19 09:56:49 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/19 17:51:04 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	executor(t_command *command, t_node *sentence)
 {
 	t_node		*current_node;
 	int		ret;
-	int		pipe_fd[2];
 
 	ret = NO_INFO;
 	current_node = sentence;
