@@ -6,21 +6,11 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 12:06:43 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/19 09:56:35 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*
-
-Função p/ percorrer node e organizar os fds
-
-void    clean_pipe(t_node *node)
-{
-    free_list(node);
-}
-*/
 
 int     pipe_execution(t_command *command, t_node *node)
 {
@@ -35,32 +25,23 @@ int     pipe_execution(t_command *command, t_node *node)
         return (perror(strerror(errno)), ERROR);
     pid_1 = fork();
     if (pid_1 == -1)
-        return (perror("fork"), ERROR);
+        return (ERROR);
     if (pid_1 == 0)
     {
         close(pipe_fd[0]);
-        if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-        {
-
-            perror("dup2 (stdout)");
-            exit(ERROR);
-        }
+        dup2(pipe_fd[1], STDOUT_FILENO);
         close(pipe_fd[1]);
         run_commands(command, node);
         exit(EXIT_SUCCESS);
     }
     pid_2 = fork();
     if (pid_2 == -1)
-        return (perror("fork"), ERROR);
-
+        return (ERROR);
     if (pid_2 == 0)
     {
         close(pipe_fd[1]);
-        if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-        {
-            perror("dup2 (stdin)");
-            exit(ERROR);
-        }
+        dup2(pipe_fd[0], STDIN_FILENO);
+
         close(pipe_fd[0]);
         run_commands(command, node);
         exit(EXIT_SUCCESS);

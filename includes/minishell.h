@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:23:38 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/19 09:55:21 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int argc, char *argv[]);
 void	set_command(t_command *command);
 char	*make_prompt(void);
 //pre_exec.c
-void	pre_exec(t_command   *command);
+void	post_parser(t_command   *command);
 
 //------------------PARSER------------------
 //parser.c
@@ -119,7 +119,7 @@ t_env	*my_getenv_by_list(const char *name, t_env *my_env);
 
 //---------------------EXEC-----------------------
 //clean_execve.c
-void	execve_clean(char *path, char **env_array, t_command *command);
+void	execve_clean(char *path, char **env_array);
 void	free_matrix(char **matrix);
 //executor.c
 int		executor(t_command *command, t_node *sentence);
@@ -136,7 +136,7 @@ int		pipe_execution(t_command *command, t_node *node);
 //run_execve.c
 int		run_execve(t_command *command, t_node *list);
 //fd.c
-void	close_fds(int fd_1, int fd_2);
+void	close_fds(int fd_0, int fd_1);
 //redirect.c
 
 //------------------------BUILTINS-----------------------

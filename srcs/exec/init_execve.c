@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:07:06 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 19:31:43 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char    *get_executable_path(t_command *command, t_node *node)
         return (print_error("PATH variable is unset or incorrectly set\n"), g_status = 127, NULL);
     dir = my_split(path, ':');
     if (!dir)
-        return (NULL);
+        return (free_matrix(dir), NULL);
     while (dir[i])
     {
         absolute_path = my_strjoin(dir[i], "/");
@@ -84,7 +84,7 @@ char    **envp_list_to_array(t_env *env_list)
     i = env_list_size(env_list);
     array = malloc(sizeof(char *) * (i + 1));
     if (!array)
-        return (perror("Erro: alocação de envp_list_to_array"), NULL);
+        return (free(array), NULL);
     i = 0;
     while(env_list) // "KEY=VALUE"
     {

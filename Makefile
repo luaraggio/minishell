@@ -6,7 +6,7 @@
 #    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/09/18 16:25:08 by lraggio          ###   ########.fr        #
+#    Updated: 2024/09/19 09:52:25 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ srcs/parser/tokenize_words.c \
 srcs/general_functions/is_chars_functions.c \
 srcs/general_functions/is_chars_functions_2.c \
 srcs/main/prompt_and_inputs.c \
-srcs/main/pre_exec.c \
+srcs/main/post_parser.c \
 srcs//variable_expansion/var_exp.c \
 srcs//variable_expansion/var_exp_utils.c \
 srcs/builtints/builtins.c \

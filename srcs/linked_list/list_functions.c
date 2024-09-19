@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:17:58 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/18 17:50:07 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_node	*create_first_input_node(char *s, t_node *list)
 	make_list_tokens(s, list);
 	list->fd_in = 0;
 	list->fd_out = 1;
-	list->pid = NO_INFO;
+	list->pid = -1;
 	list->exit_status = NO_INFO;
 	list->next = NULL;
 	return (list);
@@ -57,7 +57,7 @@ t_node	*create_last_input_node(char *s, t_node *prev)
 	make_list_tokens(s, new);
 	new->fd_in = 0;
 	new->fd_out = 1;
-	new->pid = NO_INFO;
+	new->pid = -1;
 	new->exit_status = NO_INFO;
 	prev->next = new;
 	new->next = NULL;
