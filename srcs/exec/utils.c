@@ -1,37 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fd_pipe.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 18:45:47 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/19 18:04:50 by lraggio          ###   ########.fr       */
+/*   Created: 2024/09/20 17:17:25 by lraggio           #+#    #+#             */
+/*   Updated: 2024/09/24 23:01:27 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*void    configure_fd(t_command *command, t_node *sentence)
+int	node_list_size(t_node *node)
 {
-    t_node  *current_node;
+	int	i;
 
-    current_node = sentence;
-    while (current_node)
-    {
-        
-    }
-}*/
-
-/*
-void    configure_fds()
-{
-
+	i = 0;
+	while (node)
+	{
+		i++;
+		node = node->next;
+	}
+	return (i);
 }
-*/
 
-void    close_fds(int fd_0, int fd_1)
+void	close_node_fds(t_node *node)
 {
-    close(fd_0);
-    close(fd_1);
+	while (node)
+	{
+		if (node->fd_out != STDOUT_FILENO)
+			close(node->fd_out);
+		if (node->fd_in != STDIN_FILENO)
+			close(node->fd_in);
+		node = node->next;
+	}
+}
+
+void	wait_cmds(t_node *node)
+{
+	while (node)
+	{
+		waitpid(node->pid, &node->exit_status, 0);
+		node = node->next;
+	}
 }

@@ -6,7 +6,7 @@
 #    By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 14:45:35 by lpaixao-          #+#    #+#              #
-#    Updated: 2024/09/19 09:52:25 by lraggio          ###   ########.fr        #
+#    Updated: 2024/09/23 14:37:28 by lraggio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,9 @@ srcs/exec/clean_execve.c \
 srcs/exec/run_execve.c \
 srcs/exec/pipe_execution.c \
 srcs/exec/executor.c \
-srcs/exec/fd.c
+srcs/exec/utils.c \
+srcs/exec/pre_executor.c \
+srcs/exec/redirect.c
 
 OBJS = ${SRCS:.c=.o}
 

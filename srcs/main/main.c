@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 00:41:47 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/19 09:55:04 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/24 22:04:20 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	ms_loop(t_command command)
 		add_history(command.input);
 		if (parser(&command) == ERROR)
 			continue ;
-//		printf("Printar lista do input:\n");
-//		printlist(command.l_input);
 		post_parser(&command);
 		if (executor(&command, command.l_input) == CLOSE)
 		{

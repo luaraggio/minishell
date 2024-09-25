@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/19 09:55:21 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/24 23:02:09 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_node	*create_first_input_node(char *s, t_node *list);
 t_node	*create_last_input_node(char *s, t_node *prev);
 t_tokens	*create_last_token(char *word, t_tokens *prev);
 //                  Teste:
-void	printlist(t_node *list);
+//void	printlist(t_node *list);
 
 //-----------------VARIABLE_EXPANSION---------------------
 //var_exp.c
@@ -135,9 +135,15 @@ char	*get_executable_path(t_command *command, t_node *list);
 int		pipe_execution(t_command *command, t_node *node);
 //run_execve.c
 int		run_execve(t_command *command, t_node *list);
-//fd.c
-void	close_fds(int fd_0, int fd_1);
-//redirect.c
+//utils.c
+int node_list_size(t_node *node);
+void    close_node_fds(t_node *node);
+void	wait_cmds(t_node *node);
+//pre_executor.c
+int	has_pipe_or_not(t_node *sentence);
+int	make_pipe(t_node *sentence);
+int pipe_config(t_node *node);
+void    print_fd(t_node *node, int i);
 
 //------------------------BUILTINS-----------------------
 //builtins.c

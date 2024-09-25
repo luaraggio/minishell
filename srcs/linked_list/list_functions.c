@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 16:17:58 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:50:07 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/21 00:59:12 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_tokens	*create_last_token(char *word, t_tokens *prev)
 
 // As próximas 2 funções são para testes durante a elaboração do código:
 
-static void	print_tokens(t_tokens *token)
+/*static void	print_tokens(t_tokens *token)
 {
 	t_tokens	*temp;
 	int			i = 0;
@@ -114,9 +114,9 @@ static void	print_tokens(t_tokens *token)
 		printf("Type: %i\n", temp->type);
 		temp = temp->next;
 	}
-}
+}*/
 
-void	printlist(t_node *list)
+/*void	printlist(t_node *list)
 {
 	t_node	*temp;
 	int		i;
@@ -142,4 +142,4 @@ void	printlist(t_node *list)
 		i++;
 		temp = temp->next;
 	}
-}
+}*/

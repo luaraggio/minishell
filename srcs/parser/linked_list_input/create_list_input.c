@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 00:36:05 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:29:12 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/23 11:33:16 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_tokens	*make_list_tokens(char *s, t_node *list)
 	i = 0;
 	sentence = split_sentence_by_char(s, ' ');
 //	sentence = my_split(s, ' ');
-	print_matrix(sentence);
+	//print_matrix(sentence);
 	list->token = (t_tokens *)malloc(sizeof(t_tokens));
 	if (!(list->token))
 	{

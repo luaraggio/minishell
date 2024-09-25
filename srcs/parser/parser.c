@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 20:41:24 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:18:19 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/23 17:14:52 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	parser(t_command *command)
 		return (ERROR);
 	}
 	command->input_matrix = split_sentence_by_char(command->input, '|');
-	my_printf("Matriz pós split:\n");
-	print_matrix(command->input_matrix);
+	//my_printf("Matriz pós split:\n");
+	//print_matrix(command->input_matrix);
 	make_list_from_input(command);
 	my_clean_vect(command->input_matrix);
 	search_tokens(command->l_input);
@@ -30,8 +30,6 @@ int	parser(t_command *command)
 		clear_loop_end(command);
 		return (ERROR);
 	}
-//Imprimir a lista para teste
-	printlist(command->l_input);
 	return (NO_ERROR);
 }
 
