@@ -22,7 +22,6 @@ int pwd(void)
 	return (NO_ERROR);
 }
 
-
 /*
 
 Eu havia feito a pwd pegando o valor de env, mas descobri que o pwd no bash

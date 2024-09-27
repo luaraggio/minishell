@@ -20,7 +20,10 @@ int    run_execve(t_command *command, t_node *list)
     char        **args;
 
     env_array = envp_list_to_array(command->my_env);
-    path = get_executable_path(command, list);
+    if (access(list->token->word, X_OK) != 0)
+        path = get_executable_path(command, list);
+    else
+        path = list->token->word;
     node = list;
     args = cmd_list_to_array(node);
     node->pid = fork();

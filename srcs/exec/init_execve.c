@@ -36,8 +36,6 @@ char    *get_executable_path(t_command *command, t_node *node)
         temp = my_strjoin(dir[i], "/");
         absolute_path = my_strjoin(temp, node->token->word);
         free(temp);
-        /*if (access(absolute_path, X_OK) != 0)
-            return (print_permission_denied(node), free_matrix(dir), NULL);*/
         if (access(absolute_path, X_OK) == 0)
             return (free_matrix(dir), absolute_path);
         free(absolute_path);
