@@ -17,7 +17,7 @@ int executor(t_command *command, t_node *sentence)
 	t_node *current_node;
 
 	if (is_there_space(sentence->token->word))
-		return (print_cmd_not_found(sentence), CLOSE);
+		return (print_cmd_not_found(sentence), NO_ERROR);
 	if (has_pipe_or_not(sentence) == TRUE)
 		make_pipe(sentence);
 	current_node = sentence;
@@ -33,7 +33,7 @@ int executor(t_command *command, t_node *sentence)
 	}
 	close_node_fds(current_node);
 	//wait_cmds(current_node);
-	//Dar free no que precisar!!!
+	//Ver se preciso dar free aqui!!!
     return (NO_ERROR);
 }
 

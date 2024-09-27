@@ -34,7 +34,7 @@ void	ms_loop(t_command command)
 		if (parser(&command) == ERROR)
 			continue ;
 		post_parser(&command);
-		if (executor(&command, command.l_input) == CLOSE)
+		if (executor(&command, command.l_input) == ERROR)
 		{
 			clear_loop_end(&command);
 			break ;
