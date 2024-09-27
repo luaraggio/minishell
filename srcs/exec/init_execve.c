@@ -46,8 +46,8 @@ char    *get_executable_path(t_command *command, t_node *node)
 
 char    **cmd_list_to_array(t_node *sentences)
 {
-    int         i; //iterador p/ atribuir a matriz
-    int         cmd_list_size; //quantidade de tokens na linked list dos nós
+    int         i;
+    int         cmd_list_size;
     char        **args;
     t_tokens    *current_token;
 
@@ -74,7 +74,7 @@ char    **cmd_list_to_array(t_node *sentences)
 
 char    **envp_list_to_array(t_env *env_list)
 {
-    int         i; //quantidade de args
+    int         i;
     char        **array;
     char        *temp;
 

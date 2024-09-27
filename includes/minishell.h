@@ -120,7 +120,7 @@ t_env	*my_getenv_by_list(const char *name, t_env *my_env);
 
 //---------------------EXEC-----------------------
 //clean_execve.c
-void	execve_clean(char *path, char **env_array);
+void	execve_clean(char *path, char **args, char **env_array);
 void	free_matrix(char **matrix);
 //executor.c
 int		executor(t_command *command, t_node *sentence);

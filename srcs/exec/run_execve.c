@@ -34,8 +34,7 @@ int    run_execve(t_command *command, t_node *list)
             if (dup2(node->fd_out, STDOUT_FILENO) == -1)
             {
                 perror("dup2 fd_out");
-                execve_clean(path, env_array);
-                free_matrix(args);
+                execve_clean(path, args, env_array);
                 exit(ERROR);
             }
         }
@@ -44,18 +43,18 @@ int    run_execve(t_command *command, t_node *list)
             if (dup2(node->fd_in, STDIN_FILENO) == -1)
             {
                 perror("dup2 fd_in");
-                execve_clean(path, env_array);
-                free_matrix(args);
-                exit(127);
+                execve_clean(path, args, env_array);
+                exit(ERROR);
             }
         }
         if (execve(path, args, env_array) == -1)
         {
-            execve_clean(path, env_array);
-            free_matrix(args);
+            perror("execve");
+            execve_clean(path, args, env_array);
             exit(127);
         }
     }
     waitpid(node->pid, &node->exit_status, 0);
+    execve_clean(path, args, env_array);
     return (NO_ERROR);
 }

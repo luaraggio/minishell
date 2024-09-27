@@ -56,6 +56,8 @@ int	pipe_config(t_node *node)
 	if (pipe(pipe_fd) == -1)
 		return (perror((strerror(errno))), ERROR);
 	node->fd_out = pipe_fd[1];
-	node->next->fd_in = pipe_fd[0];
+    node->next->fd_in = pipe_fd[0];
+    /*if (node->next)
+	    node->next->fd_in = pipe_fd[0];*/
 	return (NO_ERROR);
 }
