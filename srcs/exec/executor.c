@@ -6,48 +6,33 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:27:09 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/24 22:52:31 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/27 00:34:17 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*int	executor(t_command *command, t_node *sentence)
-{
-	//t_node	*current_node;
-	//int	exit_status;
-	(void)*command;
-
-	//current_node = sentence;
-	if (has_pipe_or_not(sentence) == TRUE)//Vou criar pipe se existir pipe
-		make_pipe(sentence);
-	if (is_redirect(command, sentence == TRUE)
-		do_redirections();
-	//pipe_execution(command, sentence);
-	run_commands(command, sentence);
-	//limpar tudo;
-	//waitpid(current_node->pid, &current_node->exit_status, 0);
-	return (NO_ERROR);
-}*/
-
 int executor(t_command *command, t_node *sentence)
 {
 	t_node *current_node;
 
+	if (is_there_space(sentence->token->word))
+		return (print_cmd_not_found(sentence), CLOSE);
 	if (has_pipe_or_not(sentence) == TRUE)
 		make_pipe(sentence);
 	current_node = sentence;
 	while (current_node)
 	{
 		/*if (has_redirect(current_node) == TRUE)
-			do_redirections(current_node); */
-		run_commands(command, current_node);
+			do_redirections(current_node);*/
+		if (!current_node->next)
+			run_commands(command, current_node);
+		else
+			pipe_execution(command, current_node);
 		current_node = current_node->next;
 	}
-	current_node = sentence;
 	close_node_fds(current_node);
-    current_node = sentence;
-	wait_cmds(current_node);
+	//wait_cmds(current_node);
 	//Dar free no que precisar!!!
     return (NO_ERROR);
 }

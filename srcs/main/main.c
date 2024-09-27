@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 00:41:47 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/24 22:04:20 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/26 22:19:37 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	main(int argc, char *argv[])
 
 	my_bzero(&command, sizeof(t_command));
 	if (argc > 1)
-	{
-		my_printf("bash: %s: No such file or directory\n", argv[1]); // Colocar no FD = 2
-		return 0;
-	}
+		return (print_no_such_file(argv), ERROR);
 	setup_signal_handling();
 	get_env(&command);
 	ms_loop(command);

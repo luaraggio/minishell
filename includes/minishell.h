@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/24 23:02:09 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/27 01:54:46 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int		check_following_pipes(char *str);
 char	*remove_after_double_pipe(char **str, int i);
 //print_error.c
 void	print_error(char *str);
+void	print_no_such_file(char **argv);
 //quote_validation.c
 int		n_quote_validation(char *str);
 int		dollar_is_closed_by_single_quote(char **str);
@@ -139,11 +140,13 @@ int		run_execve(t_command *command, t_node *list);
 int node_list_size(t_node *node);
 void    close_node_fds(t_node *node);
 void	wait_cmds(t_node *node);
+void print_cmd_not_found(t_node *node);
+void print_permission_denied(t_node *node);
 //pre_executor.c
 int	has_pipe_or_not(t_node *sentence);
 int	make_pipe(t_node *sentence);
 int pipe_config(t_node *node);
-void    print_fd(t_node *node, int i);
+void print_fd(t_node *node, int i);
 
 //------------------------BUILTINS-----------------------
 //builtins.c

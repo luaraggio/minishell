@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:07:06 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/24 02:44:19 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/27 01:58:24 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char    *get_executable_path(t_command *command, t_node *node)
     get_path = my_getenv_by_list("PATH", command->my_env);
     path = get_path->value;
     if (!(path) || !(get_path->value))
-        return (print_error("PATH variable is unset or incorrectly set\n"), g_status = 127, NULL);
+        return (print_error("PATH variable is unset or incorrectly set\n"), NULL);
     dir = my_split(path, ':');
     if (!dir)
         return (NULL);
@@ -36,12 +36,14 @@ char    *get_executable_path(t_command *command, t_node *node)
         temp = my_strjoin(dir[i], "/");
         absolute_path = my_strjoin(temp, node->token->word);
         free(temp);
+        /*if (access(absolute_path, X_OK) != 0)
+            return (print_permission_denied(node), free_matrix(dir), NULL);*/
         if (access(absolute_path, X_OK) == 0)
             return (free_matrix(dir), absolute_path);
         free(absolute_path);
         i++;
     }
-    return (print_error("Command not found\n"), g_status = 127, free_matrix(dir), NULL);
+    return (print_cmd_not_found(node), free_matrix(dir), NULL);
 }
 
 char    **cmd_list_to_array(t_node *sentences)
@@ -55,22 +57,18 @@ char    **cmd_list_to_array(t_node *sentences)
     cmd_list_size = count_tokens_in_node(sentences);
     args = malloc(sizeof(char *) * (cmd_list_size + 1));
     if (!args)
-        return(perror("Erro: alocação de cmd_list_to_array"), NULL);
-    while (sentences)
+        return(print_error("Erro: alocação de cmd_list_to_array"), NULL);
+    if (sentences)
     {
         current_token = sentences->token;
         while (current_token)
         {
             args[i] = my_strdup(current_token->word);
             if (!args[i])
-            {
-                free_matrix(args);
-                return(NULL);
-            }
+                return(free_matrix(args), NULL);
             i++;
             current_token = current_token->next;
         }
-        sentences = sentences->next;
     }
     args[i] = NULL;
     return (args);
@@ -96,8 +94,8 @@ char    **envp_list_to_array(t_env *env_list)
         free(temp);
         if (!array[i])
             return (free_matrix(array), NULL);
-    env_list = env_list->next;
-    i++;
+        env_list = env_list->next;
+        i++;
     }
     array[i] = NULL;
     return (array);

@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:17:25 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/24 23:01:27 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/27 01:56:28 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,29 @@ void	wait_cmds(t_node *node)
 		waitpid(node->pid, &node->exit_status, 0);
 		node = node->next;
 	}
+}
+
+void print_permission_denied(t_node *node)
+{
+	extern volatile unsigned int	g_status;
+
+    if (node && node->token && node->token->word)
+    {
+        print_error("minishell: ");
+        print_error(node->token->word);
+        print_error(": Permission denied\n");
+		g_status = 126;
+    }
+}
+void print_cmd_not_found(t_node *node)
+{
+	extern volatile unsigned int	g_status;
+
+    if (node && node->token && node->token->word)
+    {
+        print_error("minishell: ");
+        print_error(node->token->word);
+        print_error(": command not found\n");
+		g_status = 127;
+    }
 }
