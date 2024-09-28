@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:17:25 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/28 11:17:09 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/28 18:06:35 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	wait_cmds(t_node *node)
 {
 	while (node)
 	{
-		waitpid(node->pid, &node->exit_status, 0);
+		if (node->pid != 0 && node->token->type != BUILTIN)
+			waitpid(node->pid, &node->exit_status, 0);
 		node = node->next;
 	}
 }

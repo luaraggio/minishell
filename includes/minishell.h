@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:05:26 by lpaixao-          #+#    #+#             */
-/*   Updated: 2024/09/28 17:07:07 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/28 19:20:11 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	free_matrix(char **matrix);
 //executor.c
 int		executor(t_command *command, t_node *sentence);
 void	run_simple_commands(t_command *command, t_node *node);
-void	run_pipe_commands(t_command *command, t_node *node);
 //execve_utils.c
 int		env_list_size(t_env *list);
 int		count_tokens_in_node(t_node *sentence);
@@ -135,20 +134,22 @@ char	**cmd_list_to_array(t_node *sentences);
 char	*get_executable_path(t_command *command, t_node *list);
 //pipe_execution.c
 int		pipe_execution(t_command *command, t_node *node);
+int is_last_node(t_node *node);
 //run_execve.c
-int		run_execve(t_command *command, t_node *list);
+void	run_execve(t_command *command, t_node *list);
+void	run_pipe_execve(t_command *command, t_node *list);
 //utils.c
-int node_list_size(t_node *node);
-void    close_node_fds(t_node *node);
+int	node_list_size(t_node *node);
+void	close_node_fds(t_node *node);
 void	close_node_fds(t_node *node);
 void	wait_cmds(t_node *node);
 void print_cmd_not_found(t_node *node);
 void print_permission_denied(t_node *node);
 //make_pipe.c
 int	has_pipe_or_not(t_node *sentence);
+int	pipe_config(t_node *node);
 void	make_pipe(t_node *sentence);
-int pipe_config(t_node *node);
-void print_fds(t_node *node, int i);
+void	print_fds(t_node *node, int i);
 
 //------------------------BUILTINS-----------------------
 //builtins.c
