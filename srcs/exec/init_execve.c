@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:07:06 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/27 01:58:24 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/27 20:25:46 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char    *get_executable_path(t_command *command, t_node *node)
         temp = my_strjoin(dir[i], "/");
         absolute_path = my_strjoin(temp, node->token->word);
         free(temp);
-        if (access(absolute_path, X_OK) == 0)
+        if (access(absolute_path, F_OK | X_OK) == 0)
             return (free_matrix(dir), absolute_path);
         free(absolute_path);
         i++;

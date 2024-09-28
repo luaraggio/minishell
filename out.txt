@@ -1,0 +1,153 @@
+int executor(t_command *command, t_node *sentence)
+{
+	t_node *current_node;
+
+	if (is_there_space(sentence->token->word))
+		return (print_cmd_not_found(sentence), NO_ERROR);
+	if (has_pipe_or_not(sentence) == TRUE)
+		make_pipe(sentence);
+	current_node = sentence;
+	while (current_node)
+	{
+		/*if (has_redirect(current_node) == TRUE)
+			do_redirections(current_node);*/
+		if (!current_node->next)
+			run_commands(command, current_node);
+		else
+			pipe_execution(command, current_node);
+		current_node = current_node->next;
+	}
+	//close_node_fds(current_node);
+	//wait_cmds(current_node);
+	//Ver se preciso dar free aqui!!!
+    return (NO_ERROR);
+}
+
+int	has_pipe_or_not(t_node *sentence)
+{
+	if (sentence->next)
+		return (TRUE);
+	return (FALSE);
+}
+
+void print_fds(t_node *node, int i)
+{
+    printf("\033[36mNode %d:\033[0m\n", i);
+    printf("fd_in = ");
+    printf("%d\n", node->fd_in);
+    printf("fd_out = ");
+    printf("%d\n", node->fd_out);
+}
+
+int	make_pipe(t_node *sentence)
+{
+    t_node *node;
+    int pipes;
+    int i;
+
+    i = 0;
+    node = sentence;
+    pipes = count_tokens_in_node(node) - 1;
+    while (i < pipes && node)
+    {
+        pipe_config(node);
+        print_fds(node, i + 1);
+        node = node->next;
+        i++;
+    }
+    if (node)
+        print_fds(node, i + 1);
+    return NO_ERROR;
+}
+
+int	pipe_config(t_node *node)
+{
+	int	pipe_fd[2];
+
+	if (pipe(pipe_fd) == -1)
+		return (perror((strerror(errno))), ERROR);
+	node->fd_out = pipe_fd[1];
+    node->next->fd_in = pipe_fd[0];
+    /*if (node->next)
+	    node->next->fd_in = pipe_fd[0];*/
+	return (NO_ERROR);
+}
+
+int    pipe_execution(t_command *command, t_node *node)
+{
+    t_node  *current_node;
+
+    current_node = node;
+    node->pid = fork();
+    if (node->pid == 0)
+    {
+        if (node->fd_out != STDOUT_FILENO)
+            dup2(node->fd_out, STDOUT_FILENO);
+        if (node->fd_in != STDIN_FILENO)
+            dup2(node->fd_in, STDIN_FILENO);
+        run_commands(command, node);
+        exit(NO_ERROR);
+        //Ver se precisa fechar fd aqui!!!
+    }
+    waitpid(current_node->pid, &node->exit_status, 0);
+    return (NO_ERROR);
+}
+
+int	run_commands(t_command *command, t_node *node)
+{
+	t_tokens	*current_token;
+
+	current_token = node->token;
+	if (current_token->type == BUILTIN) //a função está enviando fd 1 por padrão. deverá ser ajustado isso posteriormente para enviar um fd específico
+		return (run_builtin(command, node->token, command->my_env, 1), NO_ERROR);
+	else
+		return (run_execve(command, node), NO_ERROR);
+	return (ERROR);
+}
+
+int    run_execve(t_command *command, t_node *list)
+{
+    t_node      *node;
+    char        *path;
+    char        **env_array;
+    char        **args;
+
+    env_array = envp_list_to_array(command->my_env);
+    if (access(list->token->word, X_OK) != 0)
+        path = get_executable_path(command, list);
+    else
+        path = list->token->word;
+    node = list;
+    args = cmd_list_to_array(node);
+    node->pid = fork();
+    if (node->pid == 0)
+    {
+        if (node->fd_out != STDOUT_FILENO)
+        {
+            if (dup2(node->fd_out, STDOUT_FILENO) == -1)
+            {
+                perror("dup2 fd_out");
+                execve_clean(path, args, env_array);
+                exit(ERROR);
+            }
+        }
+        if (node->fd_in != STDIN_FILENO)
+        {
+            if (dup2(node->fd_in, STDIN_FILENO) == -1)
+            {
+                perror("dup2 fd_in");
+                execve_clean(path, args, env_array);
+                exit(ERROR);
+            }
+        }
+        if (execve(path, args, env_array) == -1)
+        {
+            perror("execve");
+            execve_clean(path, args, env_array);
+            exit(127);
+        }
+    }
+    waitpid(node->pid, &node->exit_status, 0);
+    execve_clean(path, args, env_array);
+    return (NO_ERROR);
+}

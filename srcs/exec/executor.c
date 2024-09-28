@@ -6,45 +6,47 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:27:09 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/27 00:34:17 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/28 17:28:29 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*if (has_redirect(current_node) == TRUE)
+		do_redirections(current_node);*/
+
 int executor(t_command *command, t_node *sentence)
 {
 	t_node *current_node;
+	(void)*command;
 
 	if (is_there_space(sentence->token->word))
 		return (print_cmd_not_found(sentence), NO_ERROR);
 	if (has_pipe_or_not(sentence) == TRUE)
 		make_pipe(sentence);
 	current_node = sentence;
+	/*if (has_redirect(current_node) == TRUE)
+		do_redirections(current_node);*/
 	while (current_node)
 	{
-		/*if (has_redirect(current_node) == TRUE)
-			do_redirections(current_node);*/
 		if (!current_node->next)
-			run_commands(command, current_node);
+			run_simple_commands(command, current_node);
 		else
-			pipe_execution(command, current_node);
+			run_pipe_commands(command, current_node);
+		//close_node_fds(current_node);
 		current_node = current_node->next;
 	}
-	close_node_fds(current_node);
 	//wait_cmds(current_node);
-	//Ver se preciso dar free aqui!!!
     return (NO_ERROR);
 }
 
-int	run_commands(t_command *command, t_node *node)
+void	run_simple_commands(t_command *command, t_node *node)
 {
-	t_tokens	*current_token;
+	t_node	*current_node;
 
-	current_token = node->token;
-	if (current_token->type == BUILTIN) //a função está enviando fd 1 por padrão. deverá ser ajustado isso posteriormente para enviar um fd específico
-		return (run_builtin(command, node->token, command->my_env, 1), NO_ERROR);
+	current_node = node;
+	if (current_node->token->type == BUILTIN)
+		run_builtin(command, current_node->token, command->my_env, STDOUT_FILENO);
 	else
-		return (run_execve(command, node), NO_ERROR);
-	return (ERROR);
+		run_execve(command, current_node);
 }

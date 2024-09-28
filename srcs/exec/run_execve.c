@@ -6,7 +6,7 @@
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:11:22 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/26 22:49:11 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/28 17:04:04 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int    run_execve(t_command *command, t_node *list)
     char        **args;
 
     env_array = envp_list_to_array(command->my_env);
-    if (access(list->token->word, X_OK) != 0)
+    if (access(list->token->word, X_OK) != 0) // verificar acesso em outra função mais completa!!!
         path = get_executable_path(command, list);
     else
         path = list->token->word;
@@ -37,6 +37,7 @@ int    run_execve(t_command *command, t_node *list)
                 execve_clean(path, args, env_array);
                 exit(ERROR);
             }
+            close(node->fd_out);
         }
         if (node->fd_in != STDIN_FILENO)
         {
@@ -46,10 +47,10 @@ int    run_execve(t_command *command, t_node *list)
                 execve_clean(path, args, env_array);
                 exit(ERROR);
             }
+            close(node->fd_in);
         }
         if (execve(path, args, env_array) == -1)
         {
-            perror("execve");
             execve_clean(path, args, env_array);
             exit(127);
         }

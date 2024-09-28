@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pre_executor.c                                     :+:      :+:    :+:   */
+/*   make_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraggio <lraggio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 09:55:49 by lraggio           #+#    #+#             */
-/*   Updated: 2024/09/26 20:23:16 by lraggio          ###   ########.fr       */
+/*   Updated: 2024/09/28 16:40:15 by lraggio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void print_fds(t_node *node, int i)
     printf("%d\n", node->fd_out);
 }
 
-int	make_pipe(t_node *sentence)
+void	make_pipe(t_node *sentence)
 {
     t_node *node;
     int pipes;
@@ -45,8 +45,10 @@ int	make_pipe(t_node *sentence)
         i++;
     }
     if (node)
+    {
+        node->fd_out = STDOUT_FILENO;
         print_fds(node, i + 1);
-    return NO_ERROR;
+    }
 }
 
 int	pipe_config(t_node *node)
@@ -56,8 +58,7 @@ int	pipe_config(t_node *node)
 	if (pipe(pipe_fd) == -1)
 		return (perror((strerror(errno))), ERROR);
 	node->fd_out = pipe_fd[1];
-    node->next->fd_in = pipe_fd[0];
-    /*if (node->next)
-	    node->next->fd_in = pipe_fd[0];*/
+    if (node->next)
+	    node->next->fd_in = pipe_fd[0];
 	return (NO_ERROR);
 }
